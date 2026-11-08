@@ -26,7 +26,7 @@ def main():
   for error in menu_errors + order_errors:
     print(error)
 
-  # Matching validated orders to the valid menu.
+  # Matching the validated orders to the validated menu
   matched_orders = match_orders_to_menu(valid_menu, valid_orders)
 
   print("Matched order lines:", len(matched_orders))
