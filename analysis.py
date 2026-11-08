@@ -1,5 +1,5 @@
-# Function that matches the validated orders to the validated menu. 
-# Returns the matched orders.
+# Function that matches the validated orders to the validated menu
+# Returns the matched orders
 
 def match_orders_to_menu(valid_menu, valid_orders):
 
