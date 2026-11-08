@@ -1,5 +1,4 @@
-# Function that matches the validated orders to the validated menu
-# Returns the matched orders
+# Function that matches the validated orders to the validated menu, returns the matched orders
 def match_orders_to_menu(valid_menu, valid_orders):
 
     # Create a dictionary to find menu items by item_id
@@ -25,7 +24,7 @@ def match_orders_to_menu(valid_menu, valid_orders):
     return matched_orders
 
 
-# Function that calculates the performance of each item
+# Function that calculates the performance of each item, returns a list of item's performance
 def calculate_item_performance(valid_menu, matched_orders):
 
     # Create a dictionary to store each item's results
@@ -61,7 +60,7 @@ def calculate_item_performance(valid_menu, matched_orders):
     return list(item_summary.values())
 
 
-# Function that calculates the performance by category
+# Function that calculates the performance by category, returns a list of category's performace
 def calculate_category_performance(item_performance):
 
     category_summary = {}
@@ -92,3 +91,32 @@ def calculate_category_performance(item_performance):
         category["gross_margin"] = round(category["revenue"] - category["estimated_cost"], 2)
 
     return list(category_summary.values())
+
+
+# Function that ranks the menu item's performace, using a ranking criteria and a number "n" (of ranking by top n items, defined initially as top 5)
+# Returns best-performing items and worst-performing items
+def rank_menu_items(item_performance, criterion, top_n=5):
+
+    # Define the criteria allowed for ranking
+    valid_criteria = ["units_sold", "gross_margin"]
+
+    if criterion not in valid_criteria:
+        raise ValueError("Invalid ranking criterion.")
+
+    if top_n <= 0:
+        raise ValueError("top_n must be positive.")
+
+    # Best-performing items: highest values first
+    best_items = sorted(
+        item_performance,
+        key=lambda item: (-item[criterion], item["item_id"])
+    )
+
+    # Worst-performing items: lowest values first
+    worst_items = sorted(
+        item_performance,
+        key=lambda item: (item[criterion], item["item_id"])
+    )
+
+    return best_items[:top_n], worst_items[:top_n]
+
