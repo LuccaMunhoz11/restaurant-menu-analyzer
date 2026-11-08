@@ -1,5 +1,6 @@
 from restaurant.input_handling import load_csv, validate_menu, validate_orders, save_csv
 from pathlib import Path
+from analysis import match_orders_to_menu
 
 def main():
   print("Restaurant Menu Analyzer")
