@@ -25,7 +25,13 @@ def main():
 
   for error in menu_errors + order_errors:
     print(error)
-  
+
+  matched_orders, invalid_references = match_orders_to_menu(menu, orders)
+
+  print("Matched order lines:", len(matched_orders))
+  print("Invalid references:", len(invalid_references))
+  for invalid in invalid_references:
+    print(invalid)
 
 
 if __name__ == "__main__":
