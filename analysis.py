@@ -1,4 +1,5 @@
-
+# Function that matches the orders to the actual menu, filtering the inexistent ones in menu. 
+# Returns the matched orders and the inexistent ones.
 def match_orders_to_menu(menu, orders):
     menu_lookup = {}
 
