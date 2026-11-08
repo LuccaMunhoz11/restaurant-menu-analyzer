@@ -1,26 +1,20 @@
 # Function that matches the orders to the actual menu, filtering the inexistent ones in menu. 
 # Returns the matched orders and the inexistent ones.
-def match_orders_to_menu(menu, orders):
+
+def match_orders_to_menu(valid_menu, valid_orders):
+
+    # Create a dictionary to find menu items by item_id
     menu_lookup = {}
 
-    for item in menu:
+    for item in valid_menu:
         menu_lookup[item["item_id"]] = item
 
     matched_orders = []
-    invalid_references = []
 
-    for order in orders:
-        item_id = order["item_id"]
+    # Match each validated order to its menu item
+    for order in valid_orders:
 
-        if item_id not in menu_lookup:
-            invalid_references.append({
-                "order_id": order["order_id"],
-                "item_id": item_id,
-                "reason": "Unknown menu item"
-            })
-            continue
-
-        menu_item = menu_lookup[item_id]
+        menu_item = menu_lookup[order["item_id"]]
 
         matched_order = {
             **order,
@@ -32,4 +26,5 @@ def match_orders_to_menu(menu, orders):
 
         matched_orders.append(matched_order)
 
-    return matched_orders, invalid_references
+    return matched_orders
+
