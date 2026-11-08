@@ -27,7 +27,7 @@ def main():
     print(error)
 
   # Matching orders to the actual menu, filtering the inexistent ones.
-  matched_orders, invalid_references = match_orders_to_menu(menu, orders)
+  matched_orders, invalid_references = match_orders_to_menu(valid_menu, valid_orders)
 
   print("Matched order lines:", len(matched_orders))
   print("Invalid references:", len(invalid_references))
