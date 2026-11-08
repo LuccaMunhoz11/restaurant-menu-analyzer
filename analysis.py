@@ -12,9 +12,7 @@ def match_orders_to_menu(valid_menu, valid_orders):
 
     # Match each validated order to its menu item
     for order in valid_orders:
-
         menu_item = menu_lookup[order["item_id"]]
-
         matched_order = {
             **order,
             "name": menu_item["name"],
@@ -22,10 +20,10 @@ def match_orders_to_menu(valid_menu, valid_orders):
             "unit_cost": menu_item["unit_cost"],
             "price": menu_item["price"]
         }
-
         matched_orders.append(matched_order)
 
     return matched_orders
+
 
 # Function that calculates the performance of each item
 def calculate_item_performance(valid_menu, matched_orders):
@@ -36,7 +34,6 @@ def calculate_item_performance(valid_menu, matched_orders):
     # Initialize every menu item, including those with zero sales
     for item in valid_menu:
         item_id = item["item_id"]
-
         item_summary[item_id] = {
             "item_id": item_id,
             "name": item["name"],
@@ -51,19 +48,47 @@ def calculate_item_performance(valid_menu, matched_orders):
     for order in matched_orders:
         item_id = order["item_id"]
         quantity = order["quantity"]
-
         item_summary[item_id]["units_sold"] += quantity
-
         item_summary[item_id]["revenue"] += (quantity * order["price"])
-
         item_summary[item_id]["estimated_cost"] += (quantity * order["unit_cost"])
 
     # Calculate gross margin for every item
     for item in item_summary.values():
         item["revenue"] = round(item["revenue"], 2)
         item["estimated_cost"] = round(item["estimated_cost"], 2)
-
         item["gross_margin"] = round(item["revenue"] - item["estimated_cost"], 2)
 
     return list(item_summary.values())
 
+
+# Function that calculates the performance by category
+def calculate_category_performance(item_performance):
+
+    category_summary = {}
+
+    # Group item results by category
+    for item in item_performance:
+        category = item["category"]
+
+        # Initialize the category if it doesn't exist
+        if category not in category_summary:
+            category_summary[category] = {
+                "category": category,
+                "units_sold": 0,
+                "revenue": 0.0,
+                "estimated_cost": 0.0,
+                "gross_margin": 0.0
+            }
+
+        # Accumulate results for the category
+        category_summary[category]["units_sold"] += (item["units_sold"])
+        category_summary[category]["revenue"] += (item["revenue"])
+        category_summary[category]["estimated_cost"] += (item["estimated_cost"])
+
+    # Calculate category margins
+    for category in category_summary.values():
+        category["revenue"] = round(category["revenue"], 2)
+        category["estimated_cost"] = round(category["estimated_cost"], 2)
+        category["gross_margin"] = round(category["revenue"] - category["estimated_cost"], 2)
+
+    return list(category_summary.values())
