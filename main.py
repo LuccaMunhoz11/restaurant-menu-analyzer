@@ -1,12 +1,17 @@
-from restaurant.input_handling import load_csv, validate_menu, validate_orders, save_csv
+from restaurant.input_handling import (
+    load_csv, 
+    validate_menu, 
+    validate_orders, 
+    save_csv
+)
 from pathlib import Path
 from analysis import (
     match_orders_to_menu,
     calculate_item_performance,
     calculate_category_performance,
-    rank_menu_items
+    rank_menu_items,
+    calculate_period_performance
 )
-
 
 def main():
   print("Restaurant Menu Analyzer")
@@ -51,6 +56,14 @@ def main():
   print("Item performance calculated:", len(item_performance))
   print("Category performance calculated:", len(category_performance))
   
+  for category in category_performance:
+    print(
+        category["category"],
+        "| Units:", category["units_sold"],
+        "| Revenue:", category["revenue"],
+        "| Cost:", category["estimated_cost"],
+        "| Gross Margin:", category["gross_margin"]
+    )
   for category in category_performance:
       print(
           category["category"],
@@ -100,6 +113,11 @@ def main():
     # Save all rankings to one CSV file
     save_csv("results/item_rankings.csv", ranking_results)
     
+    # Calculate performance by time period
+    period_performance = calculate_period_performance(matched_orders)
+    # Save results
+    save_csv("results/period_performance.csv", period_performance)
+
 
 
 if __name__ == "__main__":

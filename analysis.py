@@ -120,3 +120,70 @@ def rank_menu_items(item_performance, criterion, top_n=5):
 
     return best_items[:top_n], worst_items[:top_n]
 
+
+
+
+
+
+# TIME BASED ANALYSIS
+# First, division on the day in time zones
+def classify_time_period(time):
+
+    hour = int(time.split(":")[0])
+
+    if hour < 12:
+        return "Morning"  # 0:00 - 12:00
+    elif hour < 15:
+        return "Lunch"    # 12:00 - 15:00
+    elif hour < 19:
+        return "Afternoon"     # 15:00 - 19:00 
+    elif hour < 23:
+        return "Dinner"        # 19:00 - 23:00
+    else:
+        return "Late night"    # 23:00 - 0:00
+
+
+# Calculate order lines, units sold, revenue and demand percentage for each time-of-day period
+def calculate_period_performance(matched_orders):
+
+    period_summary = {}
+    total_items = 0
+
+    #Initialize each period
+    PERIODS = ["Morning", "Lunch", "Afternoon", "Dinner", "Late night"]
+    
+    for period in PERIODS:
+        period_summary[period] = {
+                "period": period,
+                "orders": 0,
+                "items_sold": 0,
+                "revenue": 0.0,
+                "demand": 0.0
+            }
+    
+    
+    # Group order by time period
+    for order in matched_orders:
+        
+        period = classify_time_period(order['time'])
+
+        period_summary[period]["orders"] += 1
+        period_summary[period]["items_sold"] += (order["quantity"])
+        total_items += (order["quantity"])
+        period_summary[period]["revenue"] += (order["price"] * order["quantity"])
+    
+    #Round values and calculate demand
+    for period in period_summary.values():
+        
+        period["revenue"] = round(period["revenue"], 2)
+        
+        if total_items > 0:
+            period["demand"] = round((period["items_sold"] / total_items) * 100, 2)
+        else:
+            period["demand"] = 0.0
+        
+    return list(period_summary.values())
+
+
+
+

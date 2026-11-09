@@ -1,0 +1,21 @@
+criterion,ranking_type,position,item_id,name,units_sold,gross_margin
+units_sold,Best,1,M032,Main Item 32,163,1693.57
+units_sold,Best,2,M003,Pizza Item 03,141,1252.08
+units_sold,Best,3,M012,Main Item 12,135,290.25
+units_sold,Best,4,M018,Pizza Item 18,134,615.06
+units_sold,Best,5,M033,Pizza Item 33,124,293.88
+units_sold,Worst,1,M016,Starter Item 16,32,216.32
+units_sold,Worst,2,M006,Starter Item 06,34,92.82
+units_sold,Worst,3,M040,Drink Item 40,34,249.56
+units_sold,Worst,4,M019,Dessert Item 19,35,403.9
+units_sold,Worst,5,M041,Starter Item 41,35,188.3
+gross_margin,Best,1,M032,Main Item 32,163,1693.57
+gross_margin,Best,2,M008,Pizza Item 08,114,1432.98
+gross_margin,Best,3,M003,Pizza Item 03,141,1252.08
+gross_margin,Best,4,M042,Main Item 42,108,1104.84
+gross_margin,Best,5,M007,Main Item 07,109,1002.8
+gross_margin,Worst,1,M045,Drink Item 45,52,67.6
+gross_margin,Worst,2,M011,Starter Item 11,57,91.2
+gross_margin,Worst,3,M006,Starter Item 06,34,92.82
+gross_margin,Worst,4,M029,Dessert Item 29,44,127.6
+gross_margin,Worst,5,M044,Dessert Item 44,64,169.6
