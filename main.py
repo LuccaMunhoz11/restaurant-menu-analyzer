@@ -5,8 +5,6 @@ from restaurant.input_handling import (
     save_csv
 )
 from pathlib import Path
-<<<<<<< Updated upstream
-=======
 from analysis import (
     match_orders_to_menu,
     calculate_item_performance,
@@ -14,8 +12,6 @@ from analysis import (
     rank_menu_items,
     calculate_period_performance
 )
-
->>>>>>> Stashed changes
 
 def main():
   print("Restaurant Menu Analyzer")
@@ -40,9 +36,26 @@ def main():
 
   for error in menu_errors + order_errors:
     print(error)
+
+  # Matching the validated orders to the validated menu
+  matched_orders = match_orders_to_menu(valid_menu, valid_orders)
+
+  print("Matched order lines:", len(matched_orders))
+
+  # Calculate performance by menu item
+  item_performance = calculate_item_performance(valid_menu, matched_orders)
+
+  # Calculate performance by category
+  category_performance = calculate_category_performance(item_performance)
+
+  # Save results to CSV files
+  save_csv("results/item_performance.csv", item_performance)
+  save_csv("results/category_performance.csv", category_performance)
+
+  # Print the performace results
+  print("Item performance calculated:", len(item_performance))
+  print("Category performance calculated:", len(category_performance))
   
-<<<<<<< Updated upstream
-=======
   for category in category_performance:
     print(
         category["category"],
@@ -51,6 +64,14 @@ def main():
         "| Cost:", category["estimated_cost"],
         "| Gross Margin:", category["gross_margin"]
     )
+  for category in category_performance:
+      print(
+          category["category"],
+          "| Units:", category["units_sold"],
+          "| Revenue:", category["revenue"],
+          "| Cost:", category["estimated_cost"],
+          "| Gross Margin:", category["gross_margin"]
+      )
 
     # Start to rank the results 
     ranking_results = []
@@ -91,14 +112,12 @@ def main():
     
     # Save all rankings to one CSV file
     save_csv("results/item_rankings.csv", ranking_results)
-
-
-
+    
     # Calculate performance by time period
     period_performance = calculate_period_performance(matched_orders)
     # Save results
     save_csv("results/period_performance.csv", period_performance)
->>>>>>> Stashed changes
+
 
 
 if __name__ == "__main__":
