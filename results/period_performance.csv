@@ -1,0 +1,6 @@
+period,orders,items_sold,revenue,demand
+Morning,0,0,0.0,0.0
+Lunch,610,1541,15926.44,46.73
+Afternoon,107,287,3049.76,8.7
+Dinner,583,1470,14656.49,44.57
+Late night,0,0,0.0,0.0
