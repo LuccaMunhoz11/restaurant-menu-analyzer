@@ -64,15 +64,6 @@ def main():
         "| Cost:", category["estimated_cost"],
         "| Gross Margin:", category["gross_margin"]
     )
-  for category in category_performance:
-      print(
-          category["category"],
-          "| Units:", category["units_sold"],
-          "| Revenue:", category["revenue"],
-          "| Cost:", category["estimated_cost"],
-          "| Gross Margin:", category["gross_margin"]
-      )
-
     
   # Start to rank the results 
   ranking_results = []
