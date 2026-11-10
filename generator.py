@@ -165,6 +165,6 @@ def generate_orders(
         order["date"], order["time"], order["order_id"]
     ))
 
-    # Return records without saving here. 
+    # Return records without saving here
     # Exporting them is the responsibility of the existing save_csv() function once integrated into main.py
     return generated_orders
