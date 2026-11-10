@@ -53,19 +53,6 @@ def main():
   # Save results to CSV files
   save_csv("results/item_performance.csv", item_performance)
   save_csv("results/category_performance.csv", category_performance)
-
-  # Print the performace results
-  print("Item performance calculated:", len(item_performance))
-  print("Category performance calculated:", len(category_performance))
-  
-  for category in category_performance:
-    print(
-        category["category"],
-        "| Units:", category["units_sold"],
-        "| Revenue:", category["revenue"],
-        "| Cost:", category["estimated_cost"],
-        "| Gross Margin:", category["gross_margin"]
-    )
     
   # Start to rank the results 
   ranking_results = []
@@ -76,23 +63,9 @@ def main():
       best_items, worst_items = rank_menu_items(item_performance, criterion, top_n=5)
     
       # Display and record best and worst rankings
-      for ranking_type, ranked_items in [("Best", best_items), ("Worst", worst_items)]:  
-                
-            print(f"\n{ranking_type} 5 items by {criterion}:")
+      for ranking_type, ranked_items in [("Best", best_items), ("Worst", worst_items)]:                  
         
-            for position, item in enumerate(ranked_items, start=1):
-                        
-                    value = item[criterion]   
-                            
-                    if criterion == "gross_margin":
-                        value_display = f"{value:.2f} EUR"
-                    else:
-                        value_display = f"{value} units"   
-                                
-                    print(
-                        f"{position}. {item['name']} "
-                        f"({item['item_id']}) - {value_display}"
-                    )
+            for position, item in enumerate(ranked_items, start=1):                                            
                 
                     ranking_results.append({
                         "criterion": criterion,
