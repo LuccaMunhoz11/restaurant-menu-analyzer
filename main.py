@@ -12,6 +12,8 @@ from analysis import (
     rank_menu_items,
     calculate_period_performance
 )
+from reporting import build_summary_report
+
 
 def main():
   print("Restaurant Menu Analyzer")
@@ -107,8 +109,32 @@ def main():
     
   # Calculate performance by time period
   period_performance = calculate_period_performance(matched_orders)
-  # Save results
+    
+  # Save results of performace by time period
   save_csv("results/period_performance.csv", period_performance)
+
+  # Generate the consolidated baseline report
+  report = build_summary_report(
+      menu_file="data/menu.csv",
+      orders_file="data/orders.csv",
+      valid_menu=valid_menu,
+      valid_orders=valid_orders,
+      menu_errors=menu_errors,
+      order_errors=order_errors,
+      item_performance=item_performance,
+      category_performance=category_performance,
+      ranking_results=ranking_results,
+      period_performance=period_performance
+  )
+
+  # Save and display the structured report
+  report_path = Path("results/summary_report.txt")
+  report_path.write_text(report, encoding="utf-8")
+
+  print("\n" + report)
+  print(f"Report saved: {report_path}")
+
+
 
 
 
