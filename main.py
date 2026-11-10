@@ -73,50 +73,51 @@ def main():
           "| Gross Margin:", category["gross_margin"]
       )
 
-    # Start to rank the results 
-    ranking_results = []
     
-    # Rank items using the two selected criteria
-    for criterion in ["units_sold", "gross_margin"]:
+  # Start to rank the results 
+  ranking_results = []
+    
+  # Rank items using the two selected criteria
+  for criterion in ["units_sold", "gross_margin"]:
         
-        best_items, worst_items = rank_menu_items(item_performance, criterion, top_n=5)
+      best_items, worst_items = rank_menu_items(item_performance, criterion, top_n=5)
     
-        # Display and record best and worst rankings
-        for ranking_type, ranked_items in [("Best", best_items), ("Worst", worst_items)]:  
-            
+      # Display and record best and worst rankings
+      for ranking_type, ranked_items in [("Best", best_items), ("Worst", worst_items)]:  
+                
             print(f"\n{ranking_type} 5 items by {criterion}:")
-    
+        
             for position, item in enumerate(ranked_items, start=1):
+                        
+                    value = item[criterion]   
+                            
+                    if criterion == "gross_margin":
+                        value_display = f"{value:.2f} EUR"
+                    else:
+                        value_display = f"{value} units"   
+                                
+                    print(
+                        f"{position}. {item['name']} "
+                        f"({item['item_id']}) - {value_display}"
+                    )
                 
-                value = item[criterion]   
-                
-                if criterion == "gross_margin":
-                    value_display = f"{value:.2f} EUR"
-                else:
-                    value_display = f"{value} units"   
-                    
-                print(
-                    f"{position}. {item['name']} "
-                    f"({item['item_id']}) - {value_display}"
-                )
+                    ranking_results.append({
+                        "criterion": criterion,
+                        "ranking_type": ranking_type,
+                        "position": position,
+                        "item_id": item["item_id"],
+                        "name": item["name"],
+                        "units_sold": item["units_sold"],
+                        "gross_margin": item["gross_margin"]
+                    })
     
-                ranking_results.append({
-                    "criterion": criterion,
-                    "ranking_type": ranking_type,
-                    "position": position,
-                    "item_id": item["item_id"],
-                    "name": item["name"],
-                    "units_sold": item["units_sold"],
-                    "gross_margin": item["gross_margin"]
-                })
+  # Save all rankings to one CSV file
+  save_csv("results/item_rankings.csv", ranking_results)
     
-    # Save all rankings to one CSV file
-    save_csv("results/item_rankings.csv", ranking_results)
-    
-    # Calculate performance by time period
-    period_performance = calculate_period_performance(matched_orders)
-    # Save results
-    save_csv("results/period_performance.csv", period_performance)
+  # Calculate performance by time period
+  period_performance = calculate_period_performance(matched_orders)
+  # Save results
+  save_csv("results/period_performance.csv", period_performance)
 
 
 
