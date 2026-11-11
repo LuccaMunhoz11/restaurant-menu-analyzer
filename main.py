@@ -10,7 +10,7 @@ from analysis import (
     calculate_item_performance,
     calculate_category_performance,
     rank_menu_items,
-    calculate_period_performance
+    calculate_performance
 )
 from reporting import build_summary_report
 
@@ -81,10 +81,11 @@ def main():
   save_csv("results/item_rankings.csv", ranking_results)
     
   # Calculate performance by time period
-  period_performance = calculate_period_performance(matched_orders)
+  period_performance, day_of_week_performance = calculate_performance(matched_orders)
     
-  # Save results of performace by time period
+  # Save results of performace
   save_csv("results/period_performance.csv", period_performance)
+  save_csv("results/day_of_week_performance.csv", day_of_week_performance)
 
   # Generate the consolidated baseline report
   report = build_summary_report(
