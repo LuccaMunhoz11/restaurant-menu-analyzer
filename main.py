@@ -210,7 +210,8 @@ def main():
       item_performance=item_performance,
       category_performance=category_performance,
       ranking_results=ranking_results,
-      period_performance=period_performance
+      period_performance=period_performance,
+      day_of_week_performance=day_of_week_performance
   )
 
   # Add generation parameters to the report when synthetic orders are used
