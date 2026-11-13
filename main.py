@@ -78,7 +78,14 @@ def main():
   print("Restaurant Menu Analyzer")
 
   # Load and validate the menu
-  menu = load_csv("data/menu.csv", "menu")
+  try:
+    menu = load_csv("data/menu.csv", "menu")
+  except OSError as error:
+    parser.error(f"Cannot read menu file: {error}")
+    
+  if menu is None:
+    parser.error("Menu CSV is empty or missing required columns.")
+    
   valid_menu, menu_errors = validate_menu(menu)
 
   # Branch according to the source of orders (original or generated)
@@ -104,7 +111,14 @@ def main():
     orders_source = "results/generated_orders.csv"
       
   else:
-    orders = load_csv("data/orders.csv", "orders")
+    try:
+        orders = load_csv("data/orders.csv", "orders")
+    except OSError as error:
+        parser.error(f"Cannot read orders file: {error}")
+
+    if orders is None:
+        parser.error("Orders CSV is empty or missing required columns.")
+
     orders_source = "data/orders.csv"
 
   # Validate orders (original or generated)
