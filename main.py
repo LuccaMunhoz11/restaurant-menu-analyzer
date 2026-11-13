@@ -13,17 +13,101 @@ from analysis import (
     calculate_period_performance
 )
 from reporting import build_summary_report
+from generator import generate_orders
+import argparse
 
 
 def main():
+
+  # Create the command-line argument parser
+  parser = argparse.ArgumentParser(
+    description="Restaurant Menu Performance Analyzer"
+  )
+
+  # Allow the user to choose the order source (original or generated)
+  parser.add_argument(
+    "--mode",
+    choices=["original", "generated"],
+    default="original",
+    help="Choose between original and generated orders"
+  )
+
+  # Allow the user to choose the number of generated order lines
+  parser.add_argument(
+    "--num-orders",
+    type=int,
+    default=500,
+    help="Number of synthetic order lines to generate"
+  )
+
+  # Allow the user to choose the time-of-day demand profile
+  parser.add_argument(
+    "--profile",
+    choices=["balanced", "lunch_heavy", "dinner_heavy"],
+    default="balanced",
+    help="Time-of-day demand profile for generated orders"
+  )
+    
+  # Allow the user to control the random seed
+  parser.add_argument(
+    "--seed",
+    type=int,
+    default=42,
+    help="Random seed for reproducible order generation"
+  )
+
+  # Allow the user to choose the starting date of the generated orders
+  parser.add_argument(
+    "--start-date",
+    type=str,
+    default="2026-06-01",
+    help="Starting date for generated orders (YYYY-MM-DD)"
+  )
+    
+  # Allow the user to choose the number of days covered
+  parser.add_argument(
+    "--num-days",
+    type=int,
+    default=30,
+    help="Number of consecutive calendar days for generated orders"
+  )
+    
+  # Read the arguments provided by the user
+  args = parser.parse_args()
+    
   print("Restaurant Menu Analyzer")
 
-  # Load data csv's
+  # Load and validate the menu
   menu = load_csv("data/menu.csv", "menu")
-  orders = load_csv("data/orders.csv", "orders")
-
-  # Debugging
   valid_menu, menu_errors = validate_menu(menu)
+
+  # Branch according to the source of orders (original or generated)
+  use_generated_orders = (args.mode == "generated")
+    
+  if use_generated_orders:
+      
+    # Attempt to generate synthetic orders
+    try:
+        orders = generate_orders(
+            valid_menu,
+            num_orders=args.num_orders,
+            profile=args.profile,
+            seed=args.seed,
+            start_date=args.start_date,
+            num_days=args.num_days
+        )
+
+    # Handle invalid generator parameters
+    except ValueError as error:
+        parser.error(str(error))
+
+    orders_source = "results/generated_orders.csv"
+      
+  else:
+    orders = load_csv("data/orders.csv", "orders")
+    orders_source = "data/orders.csv"
+
+  # Validate orders (original or generated)
   valid_orders, order_errors = validate_orders(orders, valid_menu)
 
   print("Valid menu items:", len(valid_menu))
@@ -32,7 +116,14 @@ def main():
   print("Valid orders:", len(valid_orders))
   print("Order errors:", len(order_errors))
 
-  Path("results").mkdir(exist_ok=True) # If results doesnt exist create it
+  # If results doesn't exist, create it
+  Path("results").mkdir(exist_ok=True)
+    
+  # Save synthetic generated orders when the generator is used
+  if use_generated_orders:
+    save_csv("results/generated_orders.csv", orders)
+
+  # Save validated menu and validated orders
   save_csv("results/validated_menu.csv", valid_menu)
   save_csv("results/validated_orders.csv", valid_orders)
 
@@ -89,7 +180,7 @@ def main():
   # Generate the consolidated baseline report
   report = build_summary_report(
       menu_file="data/menu.csv",
-      orders_file="data/orders.csv",
+      orders_file=orders_source,
       valid_menu=valid_menu,
       valid_orders=valid_orders,
       menu_errors=menu_errors,
@@ -100,6 +191,17 @@ def main():
       period_performance=period_performance
   )
 
+  # Add generation parameters to the report when synthetic orders are used
+  if use_generated_orders:
+    report += (
+        "\nSYNTHETIC ORDER GENERATION\n"
+        f"Profile: {args.profile}\n"
+        f"Random seed: {args.seed}\n"
+        f"Requested order lines: {args.num_orders}\n"
+        f"Start date: {args.start_date}\n"
+        f"Number of days: {args.num_days}\n"
+    )
+    
   # Save and display the structured report
   report_path = Path("results/summary_report.txt")
   report_path.write_text(report, encoding="utf-8")
