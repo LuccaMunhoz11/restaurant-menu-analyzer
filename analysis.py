@@ -264,3 +264,27 @@ def calculate_weekday_period_performance(matched_orders):
         result["revenue"] = round(result["revenue"], 2)
 
     return list(combined_summary.values())
+
+
+# Identify the busiest and quietest active weekday/time-period combinations
+def identify_demand_extremes(weekday_period_performance):
+
+    busiest = None
+    quietest = None
+
+    # Compare demand across all weekday/time-period combinations
+    for result in weekday_period_performance:
+
+        # Ignore combinations with no sales when identifying the quietest period
+        if result["units_sold"] == 0:
+            continue
+
+        # Update the busiest combination
+        if busiest is None or result["units_sold"] > busiest["units_sold"]:
+            busiest = result
+
+        # Update the quietest active combination
+        if quietest is None or result["units_sold"] < quietest["units_sold"]:
+            quietest = result
+
+    return busiest, quietest
