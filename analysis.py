@@ -223,3 +223,44 @@ def calculate_performance(matched_orders):
         day.round(total_items)
 
     return list(period_summary.values()), list(day_of_week_summary.values())
+
+
+# Calculate restaurant performance for each weekday and time period
+def calculate_weekday_period_performance(matched_orders):
+
+    weekdays = [
+        "Monday", "Tuesday", "Wednesday", "Thursday",
+        "Friday", "Saturday", "Sunday"
+    ]
+
+    periods = ["Morning", "Lunch", "Afternoon", "Dinner", "Late night"]
+
+    combined_summary = {}
+
+    # Initialize every weekday and time-period combination
+    for day in weekdays:
+        for period in periods:
+            combined_summary[(day, period)] = {
+                "day": day,
+                "period": period,
+                "order_lines": 0,
+                "units_sold": 0,
+                "revenue": 0.0
+            }
+
+    # Group each matched order by weekday and time period
+    for order in matched_orders:
+        day = get_weekday_from_str(order["date"])
+        period = classify_time_period(order["time"])
+
+        result = combined_summary[(day, period)]
+
+        result["order_lines"] += 1
+        result["units_sold"] += order["quantity"]
+        result["revenue"] += order["price"] * order["quantity"]
+
+    # Round monetary results
+    for result in combined_summary.values():
+        result["revenue"] = round(result["revenue"], 2)
+
+    return list(combined_summary.values())
