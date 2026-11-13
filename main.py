@@ -11,7 +11,8 @@ from analysis import (
     calculate_category_performance,
     rank_menu_items,
     calculate_performance,
-    calculate_weekday_period_performance
+    calculate_weekday_period_performance,
+    identify_demand_extremes
 )
 from reporting import build_summary_report
 from generator import generate_orders
@@ -206,7 +207,28 @@ def main():
 
   # Save the detailed temporal analysis
   save_csv("results/weekday_period_performance.csv", weekday_period_performance)
-       
+
+  
+  # Identify busiest and quietest active periods
+  busiest, quietest = identify_demand_extremes(weekday_period_performance)
+
+  # Display the demand extremes
+  print("\nDEMAND EXTREMES")
+
+  if busiest is not None:
+    print(
+        f"Busiest period: {busiest['day']} {busiest['period']} "
+        f"({busiest['units_sold']} units sold)"
+    )
+
+    print(
+        f"Quietest active period: {quietest['day']} {quietest['period']} "
+        f"({quietest['units_sold']} units sold)"
+    )
+
+  else:
+    print("No active periods available.")
+  
 
   # Generate the consolidated baseline report
   report = build_summary_report(
