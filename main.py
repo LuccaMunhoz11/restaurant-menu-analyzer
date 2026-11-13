@@ -88,6 +88,9 @@ def main():
     
   valid_menu, menu_errors = validate_menu(menu)
 
+  if not valid_menu:
+    parser.error("No valid menu items available for analysis.")
+
   # Branch according to the source of orders (original or generated)
   use_generated_orders = (args.mode == "generated")
     
@@ -111,6 +114,7 @@ def main():
     orders_source = "results/generated_orders.csv"
       
   else:
+      
     try:
         orders = load_csv("data/orders.csv", "orders")
     except OSError as error:
@@ -123,6 +127,9 @@ def main():
 
   # Validate orders (original or generated)
   valid_orders, order_errors = validate_orders(orders, valid_menu)
+
+  if not valid_orders:
+    parser.error("No valid order lines available for analysis.")
 
   print("Valid menu items:", len(valid_menu))
   print("Menu errors:", len(menu_errors))
