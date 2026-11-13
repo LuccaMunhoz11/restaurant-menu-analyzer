@@ -28,7 +28,9 @@ def build_summary_report(
     menu_errors, order_errors,
     item_performance, category_performance,
     ranking_results, period_performance,
-    day_of_week_performance
+    day_of_week_performance,
+    weekday_period_performance,
+    busiest, quietest
 ):
     # Overall financial indicators
     total_units = sum(
@@ -139,6 +141,45 @@ def build_summary_report(
             f"{day.revenue:>14.2f} "
             f"{day.demand:>10.2f}"
         )
+    
+    # Detailed weekday and time-of-day performance
+    lines += [
+        "",
+        "DETAILED DEMAND BY WEEKDAY AND TIME PERIOD",
+        f"{'Day':<12} {'Period':<12} {'Order lines':>12} "
+        f"{'Units':>8} {'Revenue EUR':>14}",
+    ]
 
+    for result in weekday_period_performance:
+        lines.append(
+            f"{result['day']:<12} "
+            f"{result['period']:<12} "
+            f"{result['order_lines']:>12} "
+            f"{result['units_sold']:>8} "
+            f"{result['revenue']:>14.2f}"
+        )
+
+    # Summary of demand extremes
+    lines += [
+        "",
+        "DEMAND EXTREMES",
+    ]
+
+    if busiest is not None:
+        lines.append(
+            f"Busiest period: {busiest['day']} {busiest['period']} "
+            f"({busiest['units_sold']} units sold)"
+        )
+
+        lines.append(
+            f"Quietest active period: {quietest['day']} "
+            f"{quietest['period']} "
+            f"({quietest['units_sold']} units sold)"
+        )
+
+    else:
+        lines.append("No active periods available.")
+
+    
     return "\n".join(lines) + "\n"
 
