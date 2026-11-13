@@ -2,6 +2,7 @@
 #   verifying if the information is correctly formatted and handle possible errors such as missing files
 #   or incorrect values.
 
+import dataclasses
 from datetime import datetime
 import csv
 
@@ -190,7 +191,14 @@ def validate_orders(orders, valid_menu):
 #Saving (valid) data
 def save_csv(file_path, records):
     with open(file_path, mode="w", encoding="utf-8", newline="") as file:
-        writer = csv.DictWriter(file, fieldnames=records[0].keys())
+
+        if type(records[0]) == dict:
+            fieldnames = records[0].keys()
+        else:
+            fieldnames = [field.name for field in dataclasses.fields(type(records[0]))]
+            records = [dataclasses.asdict(r) for r in records]
+
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
 
         writer.writeheader()
         writer.writerows(records)

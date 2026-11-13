@@ -1,0 +1,62 @@
+RESTAURANT MENU PERFORMANCE - BASELINE REPORT
+================================================
+Menu input: data/menu.csv
+Orders input: data/orders.csv
+Period: 2026-04-01 to 2026-05-30
+Valid menu items: 45
+Invalid menu records: 0
+Valid order lines: 1300
+Invalid order lines: 0
+
+OVERALL SALES
+Units sold: 3298
+Revenue: 33632.69 EUR
+Estimated cost: 13569.82 EUR
+Gross margin: 20062.87 EUR
+Gross margin rate: 59.65%
+
+PERFORMANCE BY CATEGORY
+Category        Units    Revenue EUR     Cost EUR   Margin EUR
+--------------------------------------------------------------
+Dessert           442        5102.64      1865.62      3237.02
+Drink             447        4468.01      1822.16      2645.85
+Main              948       10830.50      4690.32      6140.18
+Pizza            1047        8978.99      3447.48      5531.51
+Starter           414        4252.55      1744.24      2508.31
+
+ITEM RANKINGS
+Best 5 by units_sold:
+  1. Main Item 32 (M032): 163 units
+  2. Pizza Item 03 (M003): 141 units
+  3. Main Item 12 (M012): 135 units
+  4. Pizza Item 18 (M018): 134 units
+  5. Pizza Item 33 (M033): 124 units
+
+Worst 5 by units_sold:
+  1. Starter Item 16 (M016): 32 units
+  2. Starter Item 06 (M006): 34 units
+  3. Drink Item 40 (M040): 34 units
+  4. Dessert Item 19 (M019): 35 units
+  5. Starter Item 41 (M041): 35 units
+
+Best 5 by gross_margin:
+  1. Main Item 32 (M032): 1693.57 EUR
+  2. Pizza Item 08 (M008): 1432.98 EUR
+  3. Pizza Item 03 (M003): 1252.08 EUR
+  4. Main Item 42 (M042): 1104.84 EUR
+  5. Main Item 07 (M007): 1002.80 EUR
+
+Worst 5 by gross_margin:
+  1. Drink Item 45 (M045): 67.60 EUR
+  2. Starter Item 11 (M011): 91.20 EUR
+  3. Starter Item 06 (M006): 92.82 EUR
+  4. Dessert Item 29 (M029): 127.60 EUR
+  5. Dessert Item 44 (M044): 169.60 EUR
+
+DEMAND BY TIME OF DAY
+Period        Order lines    Units    Revenue EUR   Demand %
+Morning                 0        0           0.00       0.00
+Lunch                 610     1541       15926.44      46.73
+Afternoon             107      287        3049.76       8.70
+Dinner                583     1470       14656.49      44.57
+Late night              0        0           0.00       0.00

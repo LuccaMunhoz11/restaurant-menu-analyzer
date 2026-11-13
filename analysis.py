@@ -1,3 +1,27 @@
+from datetime import date
+import calendar
+from dataclasses import dataclass
+
+
+@dataclass
+class Period:
+    """A period of time at the restuarant"""
+
+    period: str
+    orders: int = 0
+    items_sold: int = 0
+    revenue: float = 0.0
+    demand: float = 0.0
+
+    def round(self, total_items):
+        self.revenue = round(self.revenue, 2)
+
+        if total_items > 0:
+            self.demand = round((self.items_sold / total_items) * 100, 2)
+        else:
+            self.demand = 0.0
+
+
 # Function that matches the validated orders to the validated menu, returns the matched orders
 def match_orders_to_menu(valid_menu, valid_orders):
 
@@ -17,11 +41,21 @@ def match_orders_to_menu(valid_menu, valid_orders):
             "name": menu_item["name"],
             "category": menu_item["category"],
             "unit_cost": menu_item["unit_cost"],
-            "price": menu_item["price"]
+            "price": menu_item["price"],
         }
         matched_orders.append(matched_order)
 
     return matched_orders
+
+
+def get_weekday_from_str(date_str: str):
+    split_str = date_str.split("-")
+    year = int(split_str[0])
+    month = int(split_str[1])
+    day = int(split_str[2])
+    d = date(year, month, day)
+
+    return calendar.day_name[d.weekday()]
 
 
 # Function that calculates the performance of each item, returns a list of item's performance
@@ -40,7 +74,7 @@ def calculate_item_performance(valid_menu, matched_orders):
             "units_sold": 0,
             "revenue": 0.0,
             "estimated_cost": 0.0,
-            "gross_margin": 0.0
+            "gross_margin": 0.0,
         }
 
     # Process each matched order
@@ -48,8 +82,8 @@ def calculate_item_performance(valid_menu, matched_orders):
         item_id = order["item_id"]
         quantity = order["quantity"]
         item_summary[item_id]["units_sold"] += quantity
-        item_summary[item_id]["revenue"] += (quantity * order["price"])
-        item_summary[item_id]["estimated_cost"] += (quantity * order["unit_cost"])
+        item_summary[item_id]["revenue"] += quantity * order["price"]
+        item_summary[item_id]["estimated_cost"] += quantity * order["unit_cost"]
 
     # Calculate gross margin for every item
     for item in item_summary.values():
@@ -76,19 +110,21 @@ def calculate_category_performance(item_performance):
                 "units_sold": 0,
                 "revenue": 0.0,
                 "estimated_cost": 0.0,
-                "gross_margin": 0.0
+                "gross_margin": 0.0,
             }
 
         # Accumulate results for the category
-        category_summary[category]["units_sold"] += (item["units_sold"])
-        category_summary[category]["revenue"] += (item["revenue"])
-        category_summary[category]["estimated_cost"] += (item["estimated_cost"])
+        category_summary[category]["units_sold"] += item["units_sold"]
+        category_summary[category]["revenue"] += item["revenue"]
+        category_summary[category]["estimated_cost"] += item["estimated_cost"]
 
     # Calculate category margins
     for category in category_summary.values():
         category["revenue"] = round(category["revenue"], 2)
         category["estimated_cost"] = round(category["estimated_cost"], 2)
-        category["gross_margin"] = round(category["revenue"] - category["estimated_cost"], 2)
+        category["gross_margin"] = round(
+            category["revenue"] - category["estimated_cost"], 2
+        )
 
     return list(category_summary.values())
 
@@ -108,21 +144,15 @@ def rank_menu_items(item_performance, criterion, top_n=5):
 
     # Best-performing items: highest values first
     best_items = sorted(
-        item_performance,
-        key=lambda item: (-item[criterion], item["item_id"])
+        item_performance, key=lambda item: (-item[criterion], item["item_id"])
     )
 
     # Worst-performing items: lowest values first
     worst_items = sorted(
-        item_performance,
-        key=lambda item: (item[criterion], item["item_id"])
+        item_performance, key=lambda item: (item[criterion], item["item_id"])
     )
 
     return best_items[:top_n], worst_items[:top_n]
-
-
-
-
 
 
 # TIME BASED ANALYSIS
@@ -134,56 +164,62 @@ def classify_time_period(time):
     if hour < 12:
         return "Morning"  # 0:00 - 12:00
     elif hour < 15:
-        return "Lunch"    # 12:00 - 15:00
+        return "Lunch"  # 12:00 - 15:00
     elif hour < 19:
-        return "Afternoon"     # 15:00 - 19:00 
+        return "Afternoon"  # 15:00 - 19:00
     elif hour < 23:
-        return "Dinner"        # 19:00 - 23:00
+        return "Dinner"  # 19:00 - 23:00
     else:
-        return "Late night"    # 23:00 - 0:00
+        return "Late night"  # 23:00 - 0:00
 
 
 # Calculate order lines, units sold, revenue and demand percentage for each time-of-day period
-def calculate_period_performance(matched_orders):
+def calculate_performance(matched_orders):
 
     period_summary = {}
+    day_of_week_summary = {}
     total_items = 0
 
-    #Initialize each period
+    # Initialize each period
     PERIODS = ["Morning", "Lunch", "Afternoon", "Dinner", "Late night"]
-    
+    DAYS_OF_WEEK = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+    ]
+
     for period in PERIODS:
-        period_summary[period] = {
-                "period": period,
-                "orders": 0,
-                "items_sold": 0,
-                "revenue": 0.0,
-                "demand": 0.0
-            }
-    
-    
+        period_summary[period] = Period(period=period)
+
+    for day in DAYS_OF_WEEK:
+        day_of_week_summary[day] = Period(period=day)
+
     # Group order by time period
     for order in matched_orders:
-        
-        period = classify_time_period(order['time'])
 
-        period_summary[period]["orders"] += 1
-        period_summary[period]["items_sold"] += (order["quantity"])
-        total_items += (order["quantity"])
-        period_summary[period]["revenue"] += (order["price"] * order["quantity"])
-    
-    #Round values and calculate demand
+        # grouped by time of day
+        period = classify_time_period(order["time"])
+
+        period_summary[period].orders += 1
+        period_summary[period].items_sold += order["quantity"]
+        period_summary[period].revenue += order["price"] * order["quantity"]
+        total_items += order["quantity"]
+
+        # grouped by day of week
+        day = get_weekday_from_str(order["date"])
+
+        day_of_week_summary[day].orders += 1
+        day_of_week_summary[day].items_sold += order["quantity"]
+        day_of_week_summary[day].revenue += order["price"] * order["quantity"]
+
+    # Round values and calculate demand
     for period in period_summary.values():
-        
-        period["revenue"] = round(period["revenue"], 2)
-        
-        if total_items > 0:
-            period["demand"] = round((period["items_sold"] / total_items) * 100, 2)
-        else:
-            period["demand"] = 0.0
-        
-    return list(period_summary.values())
+        period.round(total_items)
+    for day in day_of_week_summary.values():
+        day.round(total_items)
 
-
-
-
+    return list(period_summary.values()), list(day_of_week_summary.values())

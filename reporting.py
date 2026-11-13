@@ -114,11 +114,11 @@ def build_summary_report(
 
     for period in period_performance:
         lines.append(
-            f"{period['period']:<12} "
-            f"{period['orders']:>12} "
-            f"{period['items_sold']:>8} "
-            f"{period['revenue']:>14.2f} "
-            f"{period['demand']:>10.2f}"
+            f"{period.period:<12} "
+            f"{period.orders:>12} "
+            f"{period.items_sold:>8} "
+            f"{period.revenue:>14.2f} "
+            f"{period.demand:>10.2f}"
         )
 
     return "\n".join(lines) + "\n"
