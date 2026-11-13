@@ -210,25 +210,8 @@ def main():
 
   
   # Identify busiest and quietest active periods
-  busiest, quietest = identify_demand_extremes(weekday_period_performance)
-
-  # Display the demand extremes
-  print("\nDEMAND EXTREMES")
-
-  if busiest is not None:
-    print(
-        f"Busiest period: {busiest['day']} {busiest['period']} "
-        f"({busiest['units_sold']} units sold)"
-    )
-
-    print(
-        f"Quietest active period: {quietest['day']} {quietest['period']} "
-        f"({quietest['units_sold']} units sold)"
-    )
-
-  else:
-    print("No active periods available.")
-  
+  busiest, quietest = identify_demand_extremes(weekday_period_performance)  
+    
 
   # Generate the consolidated baseline report
   report = build_summary_report(
