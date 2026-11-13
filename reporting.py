@@ -27,7 +27,8 @@ def build_summary_report(
     valid_menu, valid_orders,
     menu_errors, order_errors,
     item_performance, category_performance,
-    ranking_results, period_performance
+    ranking_results, period_performance,
+    day_of_week_performance
 ):
     # Overall financial indicators
     total_units = sum(
@@ -119,6 +120,24 @@ def build_summary_report(
             f"{period.items_sold:>8} "
             f"{period.revenue:>14.2f} "
             f"{period.demand:>10.2f}"
+        )
+        
+    # Detailed demand analysis by weekday
+    lines += [
+        "",
+        "DEMAND BY DAY OF WEEK",
+        f"{'Day':<12} {'Order lines':>12} "
+        f"{'Units':>8} {'Revenue EUR':>14} "
+        f"{'Demand %':>10}",
+    ]
+
+    for day in day_of_week_performance:
+        lines.append(
+            f"{day.period:<12} "
+            f"{day.orders:>12} "
+            f"{day.items_sold:>8} "
+            f"{day.revenue:>14.2f} "
+            f"{day.demand:>10.2f}"
         )
 
     return "\n".join(lines) + "\n"
