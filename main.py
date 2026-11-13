@@ -10,7 +10,8 @@ from analysis import (
     calculate_item_performance,
     calculate_category_performance,
     rank_menu_items,
-    calculate_performance
+    calculate_performance,
+    calculate_weekday_period_performance
 )
 from reporting import build_summary_report
 from generator import generate_orders
@@ -198,6 +199,14 @@ def main():
   # Save results of performace
   save_csv("results/period_performance.csv", period_performance)
   save_csv("results/day_of_week_performance.csv", day_of_week_performance)
+
+  
+  # Calculate combined weekday and time-of-day performance
+  weekday_period_performance = calculate_weekday_period_performance(matched_orders)
+
+  # Save the detailed temporal analysis
+  save_csv("results/weekday_period_performance.csv", weekday_period_performance)
+       
 
   # Generate the consolidated baseline report
   report = build_summary_report(
