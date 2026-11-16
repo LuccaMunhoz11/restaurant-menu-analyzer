@@ -1,7 +1,8 @@
 from datetime import date
 import calendar
 from dataclasses import dataclass
-
+from typing import List
+from menu_item import MenuItem
 
 @dataclass
 class Period:
@@ -288,3 +289,11 @@ def identify_demand_extremes(weekday_period_performance):
             quietest = result
 
     return busiest, quietest
+
+def change_prices(menu, factor: float) -> List[MenuItem]:
+
+    
+    for item in menu:
+        item.price *= factor
+
+    return menu

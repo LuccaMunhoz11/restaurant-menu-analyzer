@@ -6,6 +6,7 @@ from restaurant.input_handling import (
 )
 from pathlib import Path
 from analysis import (
+    adjust_menu_prices,
     match_orders_to_menu,
     calculate_item_performance,
     calculate_category_performance,
@@ -211,7 +212,9 @@ def main():
   
   # Identify busiest and quietest active periods
   busiest, quietest = identify_demand_extremes(weekday_period_performance)  
-    
+
+  factors = [i/100 for i in range(50, 150, 10)]
+  price_adjusted_menu = adjust_menu_prices(valid_menu) 
 
   # Generate the consolidated baseline report
   report = build_summary_report(
