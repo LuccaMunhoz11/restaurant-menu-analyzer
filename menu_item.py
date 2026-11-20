@@ -8,6 +8,10 @@ class MenuItem:
     category: str = ""
     unit_cost: float = 0
     price: float = 0
+    profit: float = 0
+
+    def __post_init__(self):
+        self.profit = self.price - self.unit_cost
 
     def validate_categories(self) -> None:
         if not self.item_id or not self.name or not self.category:

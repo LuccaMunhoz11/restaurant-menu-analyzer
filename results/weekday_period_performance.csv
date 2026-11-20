@@ -1,0 +1,36 @@
+day,period,order_lines,units_sold,revenue
+Monday,Morning,0,0,0.0
+Monday,Lunch,86,205,2171.99
+Monday,Afternoon,9,28,373.51
+Monday,Dinner,89,218,2236.24
+Monday,Late night,0,0,0.0
+Tuesday,Morning,0,0,0.0
+Tuesday,Lunch,90,233,2214.79
+Tuesday,Afternoon,16,41,480.5
+Tuesday,Dinner,78,223,2372.36
+Tuesday,Late night,0,0,0.0
+Wednesday,Morning,0,0,0.0
+Wednesday,Lunch,99,252,2642.09
+Wednesday,Afternoon,19,47,442.92
+Wednesday,Dinner,98,237,2266.29
+Wednesday,Late night,0,0,0.0
+Thursday,Morning,0,0,0.0
+Thursday,Lunch,79,183,1939.21
+Thursday,Afternoon,16,47,541.21
+Thursday,Dinner,80,204,2074.2
+Thursday,Late night,0,0,0.0
+Friday,Morning,0,0,0.0
+Friday,Lunch,82,211,2006.59
+Friday,Afternoon,14,41,387.51
+Friday,Dinner,88,216,1964.95
+Friday,Late night,0,0,0.0
+Saturday,Morning,0,0,0.0
+Saturday,Lunch,88,234,2389.49
+Saturday,Afternoon,15,39,362.88
+Saturday,Dinner,77,194,1987.76
+Saturday,Late night,0,0,0.0
+Sunday,Morning,0,0,0.0
+Sunday,Lunch,86,223,2562.28
+Sunday,Afternoon,18,44,461.23
+Sunday,Dinner,73,178,1754.69
+Sunday,Late night,0,0,0.0

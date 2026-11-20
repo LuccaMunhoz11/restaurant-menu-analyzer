@@ -88,7 +88,7 @@ def validate_orders(orders, valid_menu):
     valid_item_ids = set()      
 
     for item in valid_menu:
-        valid_item_ids.add(item["item_id"])
+        valid_item_ids.add(item.item_id)
 
 
 

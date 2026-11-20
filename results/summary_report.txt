@@ -60,3 +60,55 @@ Lunch                 610     1541       15926.44      46.73
 Afternoon             107      287        3049.76       8.70
 Dinner                583     1470       14656.49      44.57
 Late night              0        0           0.00       0.00
+
+DEMAND BY DAY OF WEEK
+Day           Order lines    Units    Revenue EUR   Demand %
+Monday                184      451        4781.74      13.67
+Tuesday               184      497        5067.65      15.07
+Wednesday             216      536        5351.30      16.25
+Thursday              175      434        4554.62      13.16
+Friday                184      468        4359.05      14.19
+Saturday              180      467        4740.13      14.16
+Sunday                177      445        4778.20      13.49
+
+DETAILED DEMAND BY WEEKDAY AND TIME PERIOD
+Day          Period        Order lines    Units    Revenue EUR
+Monday       Morning                 0        0           0.00
+Monday       Lunch                  86      205        2171.99
+Monday       Afternoon               9       28         373.51
+Monday       Dinner                 89      218        2236.24
+Monday       Late night              0        0           0.00
+Tuesday      Morning                 0        0           0.00
+Tuesday      Lunch                  90      233        2214.79
+Tuesday      Afternoon              16       41         480.50
+Tuesday      Dinner                 78      223        2372.36
+Tuesday      Late night              0        0           0.00
+Wednesday    Morning                 0        0           0.00
+Wednesday    Lunch                  99      252        2642.09
+Wednesday    Afternoon              19       47         442.92
+Wednesday    Dinner                 98      237        2266.29
+Wednesday    Late night              0        0           0.00
+Thursday     Morning                 0        0           0.00
+Thursday     Lunch                  79      183        1939.21
+Thursday     Afternoon              16       47         541.21
+Thursday     Dinner                 80      204        2074.20
+Thursday     Late night              0        0           0.00
+Friday       Morning                 0        0           0.00
+Friday       Lunch                  82      211        2006.59
+Friday       Afternoon              14       41         387.51
+Friday       Dinner                 88      216        1964.95
+Friday       Late night              0        0           0.00
+Saturday     Morning                 0        0           0.00
+Saturday     Lunch                  88      234        2389.49
+Saturday     Afternoon              15       39         362.88
+Saturday     Dinner                 77      194        1987.76
+Saturday     Late night              0        0           0.00
+Sunday       Morning                 0        0           0.00
+Sunday       Lunch                  86      223        2562.28
+Sunday       Afternoon              18       44         461.23
+Sunday       Dinner                 73      178        1754.69
+Sunday       Late night              0        0           0.00
+
+DEMAND EXTREMES
+Busiest period: Wednesday Lunch (252 units sold)
+Quietest active period: Monday Afternoon (28 units sold)
