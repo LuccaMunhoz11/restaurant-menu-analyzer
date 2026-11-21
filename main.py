@@ -1,4 +1,4 @@
-from restaurant.input_handling import (
+from input_handling import (
     load_csv, 
     validate_menu, 
     validate_orders, 
@@ -14,9 +14,13 @@ from analysis import (
     calculate_weekday_period_performance,
     identify_demand_extremes
 )
-from reporting import build_summary_report
+from reporting import build_summary_report, price_simulation_report
 from generator import generate_orders
+
+from price_simulation import simulate_item_price
+
 import argparse
+import math
 
 
 def main():
@@ -73,9 +77,30 @@ def main():
     default=30,
     help="Number of consecutive calendar days for generated orders"
   )
-    
+  
+  #Allow user to simulate a price increase
+  parser.add_argument(
+    "--price-change",
+    type=float,
+    default=None,
+    help="Hypothetical percentage change applied to all menu prices"
+  )
+
+
   # Read the arguments provided by the user
   args = parser.parse_args()
+
+  # Validate the requested price change
+  if args.price_change is not None:
+
+    if args.price_change < -100:
+      parser.error("Price change cannot be below -100%.")
+
+    if not math.isfinite(args.price_change):
+      parser.error("Price change must be a finite number.")
+
+
+
     
   print("Restaurant Menu Analyzer")
 
@@ -133,12 +158,6 @@ def main():
   if not valid_orders:
     parser.error("No valid order lines available for analysis.")
 
-  print("Valid menu items:", len(valid_menu))
-  print("Menu errors:", len(menu_errors))
-
-  print("Valid orders:", len(valid_orders))
-  print("Order errors:", len(order_errors))
-
   # If results doesn't exist, create it
   Path("results").mkdir(exist_ok=True)
     
@@ -163,6 +182,35 @@ def main():
 
   # Calculate performance by category
   category_performance = calculate_category_performance(item_performance)
+
+
+
+  # Perform hypothetical price simulation if requested
+  if args.price_change is not None:
+
+    simulated_results = []
+
+    # Apply the same percentage change to every menu item
+    for performance in item_performance:
+    
+      # Search for the corresponding menu item by ID
+      for item in valid_menu:
+        if item["item_id"] == performance["item_id"]:
+          break
+      
+      result = simulate_item_price(
+        item,
+        performance,
+        args.price_change
+      )
+
+      simulated_results.append(result)
+    
+    save_csv("results/price_simulation.csv", simulated_results)
+  
+
+
+
 
   # Save results to CSV files
   save_csv("results/item_performance.csv", item_performance)
@@ -230,6 +278,15 @@ def main():
       busiest=busiest,
       quietest=quietest
   )
+
+  # Add price simulation to report if requested
+  if args.price_change is not None:
+
+    report += price_simulation_report(
+        simulated_results,
+        args.price_change
+    )
+
 
   # Add generation parameters to the report when synthetic orders are used
   if use_generated_orders:
