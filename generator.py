@@ -130,7 +130,7 @@ def generate_orders(
 
     # Select only IDs from the validated menu so all item references are valid
     # All menu items have the same selection probability in this version
-    item_ids = [item["item_id"] for item in valid_menu]
+    item_ids = [item.item_id for item in valid_menu]
 
     # Store the new order lines as a list of dictionaries
     generated_orders = []
