@@ -5,8 +5,8 @@
 def calculate_new_price(original_price, percentage_change):
     
     # A reduction greater than 100% is not allowed
-    if percentage_change <= -100:
-        raise ValueError("Percentage change cannot be below or equal to -100%.")
+    if percentage_change < -100:
+        raise ValueError("Percentage change cannot be below -100%.")
     
     new_price = original_price * (1 + percentage_change / 100)
     return round(new_price, 2)
@@ -19,7 +19,7 @@ def simulate_item_price(item, performance, percentage_change):
     #performance gives us units_sold, estimated_cost
 
     # Calculate the hypothetical selling price
-    new_price = calculate_new_price( item["price"], percentage_change)
+    new_price = calculate_new_price(item.price, percentage_change)
 
     # Calculate simulated revenue
     simulated_revenue = round(
@@ -41,9 +41,9 @@ def simulate_item_price(item, performance, percentage_change):
     # These should be equal
 
     return {
-        "item_id": item["item_id"],
-        "name": item["name"],
-        "original_price": item["price"],
+        "item_id": item.item_id,
+        "name": item.name,
+        "original_price": item.price,
         "simulated_price": new_price,
         "units_sold": performance["units_sold"],
         "original_revenue": original_revenue,
