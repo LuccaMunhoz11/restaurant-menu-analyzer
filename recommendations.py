@@ -3,6 +3,9 @@
 
 from statistics import median
 
+# Minimum gross margin percentage for high profitability
+MARGIN_THRESHOLD = 55.0
+
 
 # Calculate an item's gross margin percentage
 def calculate_margin_percentage(item):
@@ -21,12 +24,9 @@ def calculate_margin_percentage(item):
 # Classify an item using demand and profitability
 def classify_menu_item(units_sold, margin_percentage, median_units):
 
-    # Define the profitability threshold
-    margin_threshold = 55.0
-
     # Classify demand and profitability
     low_demand = units_sold == 0 or units_sold < median_units
-    low_margin = margin_percentage < margin_threshold
+    low_margin = margin_percentage < MARGIN_THRESHOLD
 
     # Apply the recommendation rules
     if low_demand and not low_margin:
