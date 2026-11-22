@@ -1,7 +1,11 @@
 from datetime import date
 import calendar
+import os
 from dataclasses import dataclass
+from typing import List
 
+import pandas as pd
+from menu_item import MenuItem
 
 @dataclass
 class Period:
@@ -29,7 +33,7 @@ def match_orders_to_menu(valid_menu, valid_orders):
     menu_lookup = {}
 
     for item in valid_menu:
-        menu_lookup[item["item_id"]] = item
+        menu_lookup[item.item_id] = item
 
     matched_orders = []
 
@@ -38,10 +42,10 @@ def match_orders_to_menu(valid_menu, valid_orders):
         menu_item = menu_lookup[order["item_id"]]
         matched_order = {
             **order,
-            "name": menu_item["name"],
-            "category": menu_item["category"],
-            "unit_cost": menu_item["unit_cost"],
-            "price": menu_item["price"],
+            "name": menu_item.name,
+            "category": menu_item.category,
+            "unit_cost": menu_item.unit_cost,
+            "price": menu_item.price,
         }
         matched_orders.append(matched_order)
 
@@ -66,11 +70,11 @@ def calculate_item_performance(valid_menu, matched_orders):
 
     # Initialize every menu item, including those with zero sales
     for item in valid_menu:
-        item_id = item["item_id"]
+        item_id = item.item_id
         item_summary[item_id] = {
             "item_id": item_id,
-            "name": item["name"],
-            "category": item["category"],
+            "name": item.name,
+            "category": item.category,
             "units_sold": 0,
             "revenue": 0.0,
             "estimated_cost": 0.0,
@@ -288,3 +292,24 @@ def identify_demand_extremes(weekday_period_performance):
             quietest = result
 
     return busiest, quietest
+
+def simulate_price_changes(menu: List[MenuItem]):
+    factors = [i / 100 for i in range(50, 150, 10)]
+    profit_per_factor = []
+
+    for fac in factors:
+        menu_profit = sum(
+            item.price * fac - item.unit_cost
+            for item in menu
+        )
+
+        profit_per_factor.append({
+            "factor": fac,
+            "profit": menu_profit
+        })
+
+    df = pd.DataFrame(profit_per_factor)
+
+    ax = df.plot(x="factor", y="profit")
+    os.makedirs("results", exist_ok=True)
+    ax.figure.savefig("results/price_changes.png")

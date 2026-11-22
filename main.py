@@ -1,4 +1,5 @@
-from input_handling import (
+
+from restaurant.input_handling import (
     load_csv, 
     validate_menu, 
     validate_orders, 
@@ -12,7 +13,8 @@ from analysis import (
     rank_menu_items,
     calculate_performance,
     calculate_weekday_period_performance,
-    identify_demand_extremes
+    identify_demand_extremes,
+    simulate_price_changes
 )
 from reporting import build_summary_report, price_simulation_report
 from generator import generate_orders
@@ -259,7 +261,10 @@ def main():
   
   # Identify busiest and quietest active periods
   busiest, quietest = identify_demand_extremes(weekday_period_performance)  
-    
+
+  # Create plot of menu-wide profit over changes to menu prices by a factor
+  simulate_price_changes(valid_menu)
+
 
   # Generate the consolidated baseline report
   report = build_summary_report(

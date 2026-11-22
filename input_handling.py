@@ -5,6 +5,9 @@
 import dataclasses
 from datetime import datetime
 import csv
+from typing import List, Tuple
+
+from menu_item import MenuItem
 
 REQUIRED_COLUMNS = {
     "menu": {"item_id", "name", "category", "unit_cost", "price"},
@@ -43,66 +46,35 @@ def load_csv(file_path, file_type):  #menu,orders
 
 
 # Validating data
-def validate_menu(menu):
+def validate_menu(menu) -> Tuple[List[MenuItem], List[Exception]]:
 
-    valid_menu = []     #here we are going to store valid menu items
+    valid_menu: List[MenuItem] = []     #here we are going to store valid menu items
     errors = []         #here we are going to store invalid menu items
     seen_ids = set()    #since ids must be unique, this will be checked using this set
 
     # VALIDATING
-    for row_number, item in enumerate(menu, start=2):
+    for _, item in enumerate(menu, start=2):
         
         # row_number refers to the csv row where item is (to localize errors)
         # starts at 2 because first line is designated to the header
         
+        mu = MenuItem()
         # CATEGORIES
-        item_id = item.get("item_id", "").strip()
-        name = item.get("name", "").strip()
-        category = item.get("category", "").strip()
-
-        # Check if these strings are non empty
-        if not item_id or not name or not category:
-            errors.append(
-                f"Row {row_number}: Missing required menu field." # Add to errors
-            )
-            continue
-
-        # Check for duplicated ids
-        if item_id in seen_ids:
-            errors.append(
-                f"Row {row_number}: Duplicate item_id '{item_id}'." 
-            )
-            continue
-
-        # NUMERICAL FIELDS
+        mu.item_id = item.get("item_id", "").strip()
+        mu.name = item.get("name", "").strip()
+        mu.category = item.get("category", "").strip()
         cost_str = item.get("unit_cost", "").strip()
         price_str = item.get("price", "").strip()
 
-        # Check if they are indeed numerical values
-        if not cost_str.replace(".", "", 1).isdigit() or not price_str.replace(".", "", 1).isdigit():
-            errors.append(
-                f"Row {row_number}: Non numerical cost or price."
-            )
+        try:
+            mu.validate_categories()
+            mu.validate_numerical_fields(cost_str, price_str)
+        except ValueError as e:
+            errors.append(e.__str__)
             continue
 
-        # Convert strings to floats
-        unit_cost = float(cost_str)
-        price = float(price_str)
-
-        # Check if the values are in the expected ranges
-        if unit_cost < 0 or price < 0:
-            errors.append(
-                f"Row {row_number}: Invalid cost or price range."
-            )
-            continue
-
-        #If item reach this point is valid and we store it
-        valid_item = item.copy()
-        valid_item["unit_cost"] = unit_cost
-        valid_item["price"] = price
-
-        valid_menu.append(valid_item)
-        seen_ids.add(item_id)
+        valid_menu.append(mu)
+        seen_ids.add(mu.item_id)
 
     return valid_menu, errors
 
@@ -116,7 +88,7 @@ def validate_orders(orders, valid_menu):
     valid_item_ids = set()      
 
     for item in valid_menu:
-        valid_item_ids.add(item["item_id"])
+        valid_item_ids.add(item.item_id)
 
 
 

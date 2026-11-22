@@ -112,15 +112,3 @@ Sunday       Late night              0        0           0.00
 DEMAND EXTREMES
 Busiest period: Wednesday Lunch (252 units sold)
 Quietest active period: Monday Afternoon (28 units sold)
-
-HYPOTHETICAL PRICE SIMULATION
-================================================
-Applied price change: -15.00%
-
-Original revenue: 33632.69 EUR
-Simulated revenue: 28587.97 EUR
-Revenue difference: -5044.72 EUR
-
-Original gross margin: 20062.87 EUR
-Simulated gross margin: 15018.15 EUR
-Margin difference: -5044.72 EUR
