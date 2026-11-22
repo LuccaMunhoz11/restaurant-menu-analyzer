@@ -183,3 +183,43 @@ def build_summary_report(
     
     return "\n".join(lines) + "\n"
 
+# Format hypothetical price simulation results
+def price_simulation_report(simulated_results, percentage_change):
+
+    lines = [
+        "",
+        "HYPOTHETICAL PRICE SIMULATION",
+        "=" * 48,
+        f"Applied price change: {percentage_change:+.2f}%",
+        ""
+    ]
+
+    # Calculate overall financial results
+    original_revenue = sum(
+        item["original_revenue"] for item in simulated_results
+    )
+
+    simulated_revenue = sum(
+        item["simulated_revenue"] for item in simulated_results
+    )
+
+    original_margin = sum(
+        item["original_gross_margin"] for item in simulated_results
+    )
+
+    simulated_margin = sum(
+        item["simulated_gross_margin"] for item in simulated_results
+    )
+
+    # Add overall comparison to the report
+    lines += [
+        f"Original revenue: {original_revenue:.2f} EUR",
+        f"Simulated revenue: {simulated_revenue:.2f} EUR",
+        f"Revenue difference: {simulated_revenue - original_revenue:+.2f} EUR",
+        "",
+        f"Original gross margin: {original_margin:.2f} EUR",
+        f"Simulated gross margin: {simulated_margin:.2f} EUR",
+        f"Margin difference: {simulated_margin - original_margin:+.2f} EUR"
+    ]
+
+    return "\n".join(lines) + "\n"
