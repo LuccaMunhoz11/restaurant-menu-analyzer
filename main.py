@@ -197,7 +197,7 @@ def main():
     
       # Search for the corresponding menu item by ID
       for item in valid_menu:
-        if item["item_id"] == performance["item_id"]:
+        if item.item_id == performance["item_id"]:
           break
       
       result = simulate_item_price(
