@@ -16,7 +16,11 @@ from analysis import (
     identify_demand_extremes,
     simulate_price_changes
 )
-from reporting import build_summary_report, price_simulation_report
+from reporting import (
+    build_summary_report,
+    price_simulation_report,
+    menu_recommendations_report
+)
 from generator import generate_orders
 from price_simulation import simulate_item_price
 from recommendations import generate_menu_recommendations
@@ -214,10 +218,6 @@ def main():
     
     save_csv("results/price_simulation.csv", simulated_results)
   
-
-
-
-
   # Save results to CSV files
   save_csv("results/item_performance.csv", item_performance)
   save_csv("results/category_performance.csv", category_performance)
@@ -254,7 +254,6 @@ def main():
   # Save results of performace
   save_csv("results/period_performance.csv", period_performance)
   save_csv("results/day_of_week_performance.csv", day_of_week_performance)
-
   
   # Calculate combined weekday and time-of-day performance
   weekday_period_performance = calculate_weekday_period_performance(matched_orders)
@@ -262,13 +261,11 @@ def main():
   # Save the detailed temporal analysis
   save_csv("results/weekday_period_performance.csv", weekday_period_performance)
 
-  
   # Identify busiest and quietest active periods
   busiest, quietest = identify_demand_extremes(weekday_period_performance)  
 
   # Create plot of menu-wide profit over changes to menu prices by a factor
   simulate_price_changes(valid_menu, item_performance)
-
 
   # Generate the consolidated baseline report
   report = build_summary_report(
@@ -288,6 +285,9 @@ def main():
       quietest=quietest
   )
 
+  # Add rule-based menu recommendations to the report
+  report += menu_recommendations_report(menu_recommendations)
+    
   # Add price simulation to report if requested
   if args.price_change is not None:
 
