@@ -24,6 +24,7 @@ from reporting import (
 from generator import generate_orders
 from price_simulation import simulate_item_price
 from recommendations import generate_menu_recommendations
+from dashboard import create_dashboard
 
 import argparse
 import math
@@ -266,7 +267,15 @@ def main():
 
   # Create plot of menu-wide profit over changes to menu prices by a factor
   simulate_price_changes(valid_menu, item_performance)
-
+  
+  # Generate the Pandas/Matplotlib performance dashboard
+  dashboard_path = create_dashboard(
+      item_performance,
+      category_performance,
+      day_of_week_performance,
+      weekday_period_performance
+  )
+    
   # Generate the consolidated baseline report
   report = build_summary_report(
       menu_file="data/menu.csv",
@@ -284,7 +293,16 @@ def main():
       busiest=busiest,
       quietest=quietest
   )
-
+  
+  # Include the graphical dashboard location in the report
+  report += (
+      "\nGRAPHICAL PERFORMANCE DASHBOARD\n"
+      "=" * 48 + "\n"
+      f"Dashboard saved: {dashboard_path}\n"
+      "Includes category profitability, best-selling items, "
+      "weekday demand and demand heatmap.\n"
+  )
+    
   # Add rule-based menu recommendations to the report
   report += menu_recommendations_report(menu_recommendations)
     
