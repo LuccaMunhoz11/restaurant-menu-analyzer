@@ -1,3 +1,6 @@
+from recommendations import MARGIN_THRESHOLD
+
+
 # Format category performance table
 def format_category_table(category_performance):
     header = (
@@ -243,7 +246,7 @@ def menu_recommendations_report(menu_recommendations):
 
     lines += [
         f"Demand threshold (median units): {median_units:g}",
-        "Gross margin threshold: 55.00%",
+        f"Gross margin threshold: {MARGIN_THRESHOLD:.2f}%",
         "Values at or above the thresholds are classified as high.",
         "",
         "RECOMMENDATION SUMMARY",
