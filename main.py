@@ -1,5 +1,5 @@
 
-from restaurant.input_handling import (
+from input_handling import (
     load_csv, 
     validate_menu, 
     validate_orders, 
