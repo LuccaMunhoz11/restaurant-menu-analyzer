@@ -3,6 +3,7 @@ import calendar
 import os
 from dataclasses import dataclass
 from typing import List
+from price_simulation import simulate_item_price
 
 import pandas as pd
 from menu_item import MenuItem
@@ -293,23 +294,60 @@ def identify_demand_extremes(weekday_period_performance):
 
     return busiest, quietest
 
-def simulate_price_changes(menu: List[MenuItem]):
-    factors = [i / 100 for i in range(50, 150, 10)]
-    profit_per_factor = []
 
-    for fac in factors:
-        menu_profit = sum(
-            item.price * fac - item.unit_cost
-            for item in menu
-        )
+# Function that simulates menu items price changes and creates the graphical representation for each simulated scenario
+def simulate_price_changes(menu, item_performance):
 
-        profit_per_factor.append({
-            "factor": fac,
-            "profit": menu_profit
+    # Connect menu items with their observed performance
+    performance_lookup = {
+        row["item_id"]: row for row in item_performance
+    }
+
+    scenarios = []
+
+    # Simulate price changes from -50% to +50%
+    for percentage_change in range(-50, 51, 10):
+
+        total_margin = 0.0
+
+        for item in menu:
+
+            performance = performance_lookup[item.item_id]
+
+            # Reuse the existing E05 simulation
+            result = simulate_item_price(
+                item, performance, percentage_change
+            )
+
+            total_margin += result["simulated_gross_margin"]
+
+        scenarios.append({
+            "price_change_percent": percentage_change,
+            "gross_margin_eur": round(total_margin, 2)
         })
 
-    df = pd.DataFrame(profit_per_factor)
+    # Create the graphical representation
+    df = pd.DataFrame(scenarios)
 
-    ax = df.plot(x="factor", y="profit")
+    ax = df.plot(
+        x="price_change_percent",
+        y="gross_margin_eur",
+        marker="o",
+        legend=False
+    )
+
+    ax.set_xlabel("Menu price change (%)")
+    ax.set_ylabel("Total gross margin (EUR)")
+    ax.set_title(
+        "Hypothetical price changes (fixed observed quantities)"
+    )
+
     os.makedirs("results", exist_ok=True)
-    ax.figure.savefig("results/price_changes.png")
+
+    ax.figure.savefig(
+        "results/price_changes.png",
+        bbox_inches="tight"
+    )
+
+    import matplotlib.pyplot as plt
+    plt.close(ax.figure)
