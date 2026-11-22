@@ -1,4 +1,4 @@
-# Function to format a category performance table
+# Format category performance table
 def format_category_table(category_performance):
     header = (
         f"{'Category':<12} {'Units':>8} {'Revenue EUR':>14} "
@@ -21,7 +21,7 @@ def format_category_table(category_performance):
 
     return "\n".join(lines)
 
-# Function to build a summary report
+# Build a summary report
 def build_summary_report(
     menu_file, orders_file,
     valid_menu, valid_orders,
@@ -220,6 +220,78 @@ def price_simulation_report(simulated_results, percentage_change):
         f"Original gross margin: {original_margin:.2f} EUR",
         f"Simulated gross margin: {simulated_margin:.2f} EUR",
         f"Margin difference: {simulated_margin - original_margin:+.2f} EUR"
+    ]
+
+    return "\n".join(lines) + "\n"
+
+
+# Format the rule-based menu recommendations
+def menu_recommendations_report(menu_recommendations):
+
+    lines = [
+        "",
+        "RULE-BASED MENU RECOMMENDATIONS",
+        "=" * 48,
+    ]
+
+    if not menu_recommendations:
+        lines.append("No menu recommendations available.")
+        return "\n".join(lines) + "\n"
+
+    # Retrieve the demand threshold used by the recommendation engine
+    median_units = menu_recommendations[0]["median_units_sold"]
+
+    lines += [
+        f"Demand threshold (median units): {median_units:g}",
+        "Gross margin threshold: 55.00%",
+        "Values at or above the thresholds are classified as high.",
+        "",
+        "RECOMMENDATION SUMMARY",
+    ]
+
+    # Define the recommendation categories
+    categories = [
+        "Promote",
+        "Review",
+        "Consider removal",
+        "Maintain"
+    ]
+
+    # Group menu items by their recommendation
+    grouped = {category: [] for category in categories}
+
+    for item in menu_recommendations:
+        grouped[item["recommendation"]].append(item)
+
+    # Count the items in each recommendation category
+    for category in categories:
+        lines.append(
+            f"{category}: {len(grouped[category])} items"
+        )
+
+    # Show a few examples without overcrowding the report
+    lines += [
+        "",
+        "RECOMMENDATION EXAMPLES",
+        "(First 2 items in menu order per category)"
+    ]
+
+    for category in categories:
+
+        if not grouped[category]:
+            continue
+
+        lines.append(f"\n{category}:")
+
+        for item in grouped[category][:2]:
+            lines.append(
+                f"  {item['name']} ({item['item_id']}): "
+                f"{item['reason']}"
+            )
+
+    lines += [
+        "",
+        "Full recommendations: results/menu_recommendations.csv"
     ]
 
     return "\n".join(lines) + "\n"
