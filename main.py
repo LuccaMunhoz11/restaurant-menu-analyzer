@@ -18,8 +18,8 @@ from analysis import (
 )
 from reporting import build_summary_report, price_simulation_report
 from generator import generate_orders
-
 from price_simulation import simulate_item_price
+from recommendations import generate_menu_recommendations
 
 import argparse
 import math
@@ -185,7 +185,11 @@ def main():
   # Calculate performance by category
   category_performance = calculate_category_performance(item_performance)
 
+  # Generate rule-based recommendations for menu items
+  menu_recommendations = generate_menu_recommendations(valid_menu, item_performance)
 
+  # Save menu recommendations to a CSV file
+  save_csv("results/menu_recommendations.csv", menu_recommendations) 
 
   # Perform hypothetical price simulation if requested
   if args.price_change is not None:
