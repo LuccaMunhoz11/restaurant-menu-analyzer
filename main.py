@@ -263,7 +263,7 @@ def main():
   busiest, quietest = identify_demand_extremes(weekday_period_performance)  
 
   # Create plot of menu-wide profit over changes to menu prices by a factor
-  simulate_price_changes(valid_menu)
+  simulate_price_changes(valid_menu, item_performance)
 
 
   # Generate the consolidated baseline report
