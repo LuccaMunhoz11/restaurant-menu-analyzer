@@ -46,14 +46,14 @@ def load_csv(file_path, file_type):  #menu,orders
 
 
 # Validating data
-def validate_menu(menu) -> Tuple[List[MenuItem], List[Exception]]:
+def validate_menu(menu) -> Tuple[List[MenuItem], List[str]]:
 
     valid_menu: List[MenuItem] = []     #here we are going to store valid menu items
     errors = []         #here we are going to store invalid menu items
     seen_ids = set()    #since ids must be unique, this will be checked using this set
 
     # VALIDATING
-    for _, item in enumerate(menu, start=2):
+    for row_number, item in enumerate(menu, start=2):
         
         # row_number refers to the csv row where item is (to localize errors)
         # starts at 2 because first line is designated to the header
@@ -70,9 +70,16 @@ def validate_menu(menu) -> Tuple[List[MenuItem], List[Exception]]:
             mu.validate_categories()
             mu.validate_numerical_fields(cost_str, price_str)
         except ValueError as e:
-            errors.append(e.__str__)
+            errors.append(f"Row {row_number}: {e}")
             continue
 
+        # Check for duplicated menu item IDs
+        if mu.item_id in seen_ids:
+            errors.append(
+                f"Row {row_number}: Duplicate item_id '{mu.item_id}'."
+            )
+            continue
+        
         valid_menu.append(mu)
         seen_ids.add(mu.item_id)
 
