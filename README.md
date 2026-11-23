@@ -433,3 +433,56 @@ The reported gross margins are based on the estimated costs supplied in the menu
 The generated reports and visualizations are designed to support comparisons between menu items, categories, demand periods, and hypothetical pricing scenarios.
 
 Together, these outputs provide an interpretable overview of restaurant menu performance and support operational decision-making.
+
+## 7. Implementation Evidence Summary
+
+This section documents how the project satisfies the requirements included in the professor-approved configuration.
+
+For each requirement, the corresponding Python modules and functions are identified, together with a brief explanation of the implementation.
+
+The application combines fundamental Python programming techniques with modular design, reusable functions, data validation, analytical calculations, simulation, and graphical reporting.
+
+### 7.1. Common Mandatory Requirements (C01–C04)
+
+| Requirement | Where in Code | How It Is Implemented |
+|---|---|---|
+| **C01 — File Input/Output and Validation** | `input_handling.py`: `load_csv()`, `validate_menu()`, `validate_orders()`, `save_csv()`; `menu_item.py`: `MenuItem.validate_categories()`, `MenuItem.validate_numerical_fields()` | Reads menu and order CSV files, validates required fields, identifiers, monetary values, quantities, dates, and times, and reports invalid records. Validated datasets and calculated results are exported to CSV files. |
+| **C02 — Program Structure and Command Line** | `main.py`: `main()`; reusable functions distributed across the other modules | Uses `main.py` as the application's entry point and `argparse` to support configurable execution modes, synthetic order parameters, and price simulations. Separate modules organize validation, analysis, generation, reporting, recommendations, and visualization. |
+| **C03 — Summary Report Generation** | `reporting.py`: `build_summary_report()`, `price_simulation_report()`, `menu_recommendations_report()`; `main.py`: `main()` | Generates a consolidated textual report identifying the input dataset and analysis period, presenting financial indicators, category summaries, rankings, temporal analysis, recommendations, and selected scenario results. The report is saved as `results/summary_report.txt`. |
+| **C04 — Representation of Results** | `reporting.py`: `format_category_table()`, `build_summary_report()`; `dashboard.py`: `create_dashboard()`; `analysis.py`: `simulate_price_changes()` | Presents results through structured textual tables, menu rankings, a four-chart Matplotlib dashboard, and a price-sensitivity visualization, using readable labels, units, and categories. |
+
+### 7.2. Project-Specific Mandatory Requirements (M01–M03)
+
+| Requirement | Where in Code | How It Is Implemented |
+|---|---|---|
+| **M01 — Match Orders to Menu Items** | `input_handling.py`: `validate_orders()`; `analysis.py`: `match_orders_to_menu()` | Validates menu-item references and matches each valid order line to its corresponding menu item through `item_id`. The matching process adds menu information, including category, selling price, and unit cost, allowing quantities and financial results to be calculated correctly. Unknown item references are reported during validation. |
+| **M02 — Sales and Gross Margin Calculations** | `analysis.py`: `calculate_item_performance()`, `calculate_category_performance()` | Calculates units sold, revenue, estimated cost, and gross margin for each menu item using order quantities and menu prices/costs. Results are then aggregated by category. All valid menu items are initialized before processing orders, including items with zero sales. |
+| **M03 — Menu-Item Performance Rankings** | `analysis.py`: `rank_menu_items()`; `main.py`: `main()` | Generates best- and worst-performing menu-item rankings using two criteria: units sold and gross margin. Rankings are deterministic, using `item_id` to resolve ties, and the five highest- and lowest-performing items for each criterion are included in the generated results. |
+
+### 7.3. Selected Extensions (E02–E06)
+
+| Requirement | Where in Code | How It Is Implemented |
+|---|---|---|
+| **E02 — Synthetic Order Generator** | `generator.py`: `validate_generator_parameters()`, `generate_order_time()`, `generate_orders()`; `main.py`: `main()` | Generates valid synthetic order lines based on the existing menu. Supports configurable order counts, time-of-day demand profiles, starting dates, generation periods, and random seeds. Generated records preserve the original orders CSV schema and can be processed by the same analytical pipeline. |
+| **E03 — Detailed Temporal Analysis** | `analysis.py`: `get_weekday_from_str()`, `classify_time_period()`, `calculate_performance()`, `calculate_weekday_period_performance()`, `identify_demand_extremes()` | Classifies orders by weekday and time-of-day period, calculates order lines, units sold, revenue, and demand distribution, and combines both dimensions for detailed temporal analysis. Also identifies the busiest and quietest active weekday/time-period combinations. |
+| **E04 — Pandas/Matplotlib Dashboard** | `dashboard.py`: `prepare_dashboard_data()`, `create_dashboard()`; `main.py`: `main()` | Converts existing analytical results into Pandas DataFrames and produces four Matplotlib visualizations: gross margin by category, top five best-selling menu items, weekday demand, and a weekday/time-period demand heatmap. The dashboard is saved as `results/dashboard.png`. |
+| **E05 — Hypothetical Price Simulation** | `price_simulation.py`: `calculate_new_price()`, `simulate_item_price()`; `analysis.py`: `simulate_price_changes()`; `reporting.py`: `price_simulation_report()`; `main.py`: `main()` | Applies hypothetical percentage changes to menu prices while keeping observed quantities fixed. Recalculates revenue and gross margin, compares simulated results with baseline performance, and generates a price-sensitivity chart covering multiple adjustment scenarios. |
+| **E06 — Rule-Based Menu Recommendations** | `recommendations.py`: `calculate_margin_percentage()`, `classify_menu_item()`, `generate_menu_recommendations()`; `reporting.py`: `menu_recommendations_report()` | Combines sales volume and gross margin percentage to classify menu items using transparent decision rules. Demand is compared with the median units sold, while profitability is evaluated against a documented margin threshold. The resulting recommendations include Maintain, Promote, Review, and Consider removal, together with explanatory reasons. |
+
+### 7.4. Implementation Approach
+
+The application was designed to keep the main analytical operations transparent and independently verifiable.
+
+**Core analytical logic:** Order matching, aggregation, financial calculations, temporal classification, and rankings are implemented primarily using Python functions, loops, conditions, dictionaries, lists, and sorting operations.
+
+**Modularity:** Each module has a defined responsibility, allowing the application to reuse the same validated data and analytical results across reporting, simulations, recommendations, and graphical visualizations.
+
+**Reproducibility:** The synthetic order generator supports fixed random seeds, while hypothetical price simulations follow deterministic calculations based on observed quantities.
+
+**Transparency:** Menu rankings apply explicit criteria and tie-breaking rules, price simulations preserve fixed quantities, and menu recommendations are generated through documented demand and profitability thresholds.
+
+**Testing:** The application's core functions and command-line execution are verified using automated unit and integration tests stored in the `tests/` directory.
+
+The same application integrates all selected requirements, with `main.py` coordinating the execution and ensuring that the relevant results are generated and saved.
+
+The project also implements basic demand analysis by time period, supporting the more detailed temporal analysis developed under E03. The selected scope and corresponding PCP allocation are documented in Section 3.
