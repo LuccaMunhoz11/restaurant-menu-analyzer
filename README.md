@@ -486,3 +486,178 @@ The application was designed to keep the main analytical operations transparent 
 The same application integrates all selected requirements, with `main.py` coordinating the execution and ensuring that the relevant results are generated and saved.
 
 The project also implements basic demand analysis by time period, supporting the more detailed temporal analysis developed under E03. The selected scope and corresponding PCP allocation are documented in Section 3.
+
+## 8. Testing, Validation and Limitations
+
+The application was tested using the original course datasets, synthetically generated orders, and small controlled test cases.
+
+Testing focused on verifying the correctness of analytical calculations, the consistency of generated results, the handling of invalid inputs, and the integration of the selected extensions.
+
+To make these checks reproducible, the project includes automated unit and integration tests using Python's built-in `unittest` framework.
+
+### 8.1. Automated Testing
+
+The automated tests are organized into two Python files inside the `tests/` directory.
+
+| Test File | Number of Tests | Purpose |
+|---|---:|---|
+| `test_core.py` | 6 | Verifies individual functions, including validation, financial calculations, rankings, and synthetic order generation. |
+| `test_integration.py` | 5 | Verifies command-line behavior, missing input files, invalid arguments, and complete application execution using a controlled dataset. |
+| **Total** | **11** | **Automated tests covering core functionality and application integration.** |
+
+The unit tests use small datasets with known expected results, allowing the calculations and validation rules to be independently verified.
+
+The integration tests execute `main.py` through a separate Python process and use temporary directories to avoid modifying the original course datasets or submitted baseline outputs.
+
+**Running the tests**
+
+To execute the complete automated test suite, open a terminal in the project's root directory and run:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+The `-v` argument enables verbose output, displaying each test and its result.
+
+A successful execution should conclude with:
+
+```text
+Ran 11 tests
+
+OK
+```
+
+All 11 automated tests passed during the project's final verification.
+
+### 8.2. Validation and Edge-Case Testing
+
+The test suite and additional manual checks cover the main validation cases specified in the project requirements.
+
+| Test Scenario | Expected Behavior |
+|---|---|
+| Order referencing an unknown menu item | Reject the invalid order line and report the unknown `item_id`. |
+| Menu item with zero sales | Preserve the item in the performance results with zero units sold, revenue, estimated cost, and gross margin. |
+| Ties in performance rankings | Apply deterministic ordering using `item_id` as a tie-breaker. |
+| Missing or unreadable input file | Stop execution and display an understandable error message. |
+| Invalid command-line selection | Reject unsupported argument values. |
+| Missing required CSV fields | Identify the invalid record without causing an unexpected program crash. |
+| Invalid numerical values | Reject negative monetary values, NaN, infinity, and invalid quantities. |
+| Invalid dates or times | Exclude records containing invalid date or time values. |
+| Reproducible synthetic orders | Generate identical records when the same menu, parameters, and random seed are used. |
+
+These tests ensure that the application does not silently accept invalid data or produce misleading results in the tested scenarios.
+
+### 8.3. Financial and Analytical Consistency
+
+Financial calculations were verified using small controlled examples with manually calculated expected values.
+
+For example, the integration test includes a menu item with a selling price of EUR 10.00 and an estimated unit cost of EUR 4.00.
+
+When three units are sold, the expected results are:
+
+| Indicator | Calculation | Expected Result |
+|---|---|---:|
+| Units sold | 2 + 1 | 3 |
+| Revenue | 3 × 10.00 | EUR 30.00 |
+| Estimated cost | 3 × 4.00 | EUR 12.00 |
+| Gross margin | 30.00 − 12.00 | EUR 18.00 |
+
+The application successfully produced the expected results.
+
+Additional consistency checks verified that total quantities and financial results remain aligned across item-level summaries, category-level summaries, temporal analysis, and graphical representations.
+
+The complete application was also executed using the original reference dataset and different synthetic-order and price-simulation scenarios.
+
+### 8.4. Main Analytical Assumptions
+
+The application uses several explicit assumptions to keep its analytical models transparent and understandable.
+
+**Estimated Unit Costs**
+
+Financial calculations use the estimated `unit_cost` values supplied in the menu dataset. Gross margin represents revenue minus these estimated costs and does not account for all restaurant operating expenses.
+
+**Synthetic Order Generation**
+
+The generator creates order lines using valid menu-item identifiers, configurable time-of-day demand profiles, randomly selected quantities, and a user-defined random seed.
+
+Menu items are selected with equal probability, while the selected demand profile controls the relative frequency of lunch, afternoon, and dinner orders. Generated quantities range from one to four units per order line.
+
+The generator produces synthetic examples for analysis and testing, rather than predicting real customer behavior.
+
+**Time-of-Day Classification**
+
+Order timestamps are classified into five periods:
+
+| Period | Time Interval |
+|---|---|
+| Morning | 00:00–11:59 |
+| Lunch | 12:00–14:59 |
+| Afternoon | 15:00–18:59 |
+| Dinner | 19:00–22:59 |
+| Late night | 23:00–23:59 |
+
+These boundaries are used consistently throughout the temporal analysis.
+
+**Hypothetical Price Changes**
+
+Price simulations assume that observed sales quantities remain constant when menu prices change.
+
+New prices are calculated using the specified percentage adjustment, and revenue and gross margins are recalculated accordingly.
+
+The model does not estimate changes in customer demand caused by higher or lower prices.
+
+**Rule-Based Recommendations**
+
+Menu recommendations are determined using two indicators: units sold and gross margin percentage.
+
+Demand is evaluated relative to the median units sold across menu items, while profitability is compared against a 55% gross-margin threshold.
+
+Each item is classified as Maintain, Promote, Review, or Consider removal according to the documented decision rules.
+
+These recommendations are analytical suggestions rather than automatic operational decisions.
+
+### 8.5. Project Limitations
+
+The application was designed as a structured educational project focused on fundamental programming techniques, data analysis, and transparent decision rules.
+
+Its main limitations include:
+
+- **Fixed-quantity price simulation:** The model does not incorporate price elasticity or changes in customer demand.
+- **Estimated profitability:** Gross margins exclude other operating expenses, such as labor, rent, utilities, and taxes.
+- **Simplified synthetic orders:** Generated order patterns are based on predefined probabilities and random selection rather than a model calibrated to real restaurant behavior.
+- **Rule-based recommendations:** Menu classifications rely on explicit thresholds and do not incorporate customer preferences, ingredient availability, or predictive machine-learning models.
+- **File-based operation:** Input and output data are managed through CSV, TXT, and PNG files instead of a database or graphical user interface.
+- **Descriptive temporal analysis:** Demand comparisons describe the observed or generated datasets and are not forecasts of future restaurant activity.
+
+These limitations are consistent with the project's intended scope and allow the underlying algorithms and calculations to remain interpretable and independently verifiable.
+
+### 8.6. Final Verification and Reproducibility
+
+The project was verified using the original reference data, alternative generated-order profiles, hypothetical price scenarios, and controlled test cases.
+
+The final repository includes:
+
+- All application source files and required dependencies.
+- The original course-provided datasets.
+- Representative baseline outputs.
+- Reproducible generated-order and price-simulation examples.
+- Automated unit and integration tests.
+- Documentation explaining the project structure, execution commands, and implementation of the selected requirements.
+
+To reproduce the baseline analysis, run:
+
+```bash
+python main.py
+```
+
+To execute the automated tests, run:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+Both commands should be executed from the project's root directory after installing the dependencies described in Section 5.
+
+The application preserves the required command-line interface and integrates all functionality included in the professor-approved project configuration.
+
+The complete implementation, supporting datasets, representative outputs, tests, and documentation provide a reproducible basis for project evaluation and demonstration.
