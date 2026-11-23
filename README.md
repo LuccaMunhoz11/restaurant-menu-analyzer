@@ -64,7 +64,7 @@ The project is organized into the following main components:
 | `input_handling.py` | Loads CSV datasets, validates menu and order records, handles invalid data, and exports results to CSV files. |
 | `menu_item.py` | Defines the `MenuItem` dataclass, storing menu-item information and validating prices, costs, and required fields. |
 | `analysis.py` | Performs the core analytical calculations, including order matching, item and category performance, rankings, temporal analysis, and price-sensitivity visualization. |
-| `generator.py` | Generates synthetic order records using configurable demand profiles, dates, order quantities, and random seeds. |
+| `generator.py` | Generates synthetic order records with configurable order counts, time-of-day demand profiles, date ranges, and random seeds. Each generated order line contains a randomly selected quantity between 1 and 4 units. |
 | `price_simulation.py` | Simulates hypothetical menu price changes and calculates their impact on revenue and gross margins while keeping observed quantities fixed. |
 | `recommendations.py` | Applies transparent rules combining demand and profitability indicators to generate menu-item recommendations. |
 | `reporting.py` | Organizes analytical results into readable tables and structured textual reports. |
