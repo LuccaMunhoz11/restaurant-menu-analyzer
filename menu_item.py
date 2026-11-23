@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import math
 
 
 @dataclass
@@ -30,6 +31,10 @@ class MenuItem:
             price = float(price_str)
         except (TypeError, ValueError) as exc:
             raise ValueError("Non numerical cost or price.") from exc
+
+        # Reject NaN and infinite monetary values
+        if not math.isfinite(unit_cost) or not math.isfinite(price):
+            raise ValueError("Cost and price must be finite numbers.")
 
         # Check if the values are in the expected ranges
         if unit_cost < 0 or price < 0:
