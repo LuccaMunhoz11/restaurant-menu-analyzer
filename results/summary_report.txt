@@ -112,3 +112,135 @@ Sunday       Late night              0        0           0.00
 DEMAND EXTREMES
 Busiest period: Wednesday Lunch (252 units sold)
 Quietest active period: Monday Afternoon (28 units sold)
+
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+GRAPHICAL PERFORMANCE DASHBOARD
+=
+Dashboard saved: results/dashboard.png
+Includes category profitability, best-selling items, weekday demand and demand heatmap.
+
+RULE-BASED MENU RECOMMENDATIONS
+================================================
+Demand threshold (median units): 56
+Gross margin threshold: 55.00%
+Values at or above the thresholds are classified as high.
+
+RECOMMENDATION SUMMARY
+Promote: 18 items
+Review: 8 items
+Consider removal: 4 items
+Maintain: 15 items
+
+RECOMMENDATION EXAMPLES
+(First 2 items in menu order per category)
+
+Promote:
+  Starter Item 01 (M001): Low demand but high profitability. Units sold: 51 (menu median: 56); gross margin: 65.62%.
+  Dessert Item 04 (M004): Low demand but high profitability. Units sold: 44 (menu median: 56); gross margin: 63.57%.
+
+Review:
+  Starter Item 11 (M011): High demand but low profitability. Units sold: 57 (menu median: 56); gross margin: 50.63%.
+  Main Item 12 (M012): High demand but low profitability. Units sold: 135 (menu median: 56); gross margin: 52.96%.
+
+Consider removal:
+  Drink Item 05 (M005): Low demand and low profitability. Units sold: 48 (menu median: 56); gross margin: 46.56%.
+  Starter Item 06 (M006): Low demand and low profitability. Units sold: 34 (menu median: 56); gross margin: 52.80%.
+
+Maintain:
+  Main Item 02 (M002): High demand and high profitability. Units sold: 90 (menu median: 56); gross margin: 61.80%.
+  Pizza Item 03 (M003): High demand and high profitability. Units sold: 141 (menu median: 56); gross margin: 66.47%.
+
+Full recommendations: results/menu_recommendations.csv
