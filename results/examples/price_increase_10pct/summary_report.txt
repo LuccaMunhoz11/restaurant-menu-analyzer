@@ -1,0 +1,164 @@
+RESTAURANT MENU PERFORMANCE - BASELINE REPORT
+================================================
+Menu input: data/menu.csv
+Orders input: data/orders.csv
+Period: 2026-04-01 to 2026-05-30
+Valid menu items: 45
+Invalid menu records: 0
+Valid order lines: 1300
+Invalid order lines: 0
+
+OVERALL SALES
+Units sold: 3298
+Revenue: 33632.69 EUR
+Estimated cost: 13569.82 EUR
+Gross margin: 20062.87 EUR
+Gross margin rate: 59.65%
+
+PERFORMANCE BY CATEGORY
+Category        Units    Revenue EUR     Cost EUR   Margin EUR
+--------------------------------------------------------------
+Dessert           442        5102.64      1865.62      3237.02
+Drink             447        4468.01      1822.16      2645.85
+Main              948       10830.50      4690.32      6140.18
+Pizza            1047        8978.99      3447.48      5531.51
+Starter           414        4252.55      1744.24      2508.31
+
+ITEM RANKINGS
+Best 5 by units_sold:
+  1. Main Item 32 (M032): 163 units
+  2. Pizza Item 03 (M003): 141 units
+  3. Main Item 12 (M012): 135 units
+  4. Pizza Item 18 (M018): 134 units
+  5. Pizza Item 33 (M033): 124 units
+
+Worst 5 by units_sold:
+  1. Starter Item 16 (M016): 32 units
+  2. Starter Item 06 (M006): 34 units
+  3. Drink Item 40 (M040): 34 units
+  4. Dessert Item 19 (M019): 35 units
+  5. Starter Item 41 (M041): 35 units
+
+Best 5 by gross_margin:
+  1. Main Item 32 (M032): 1693.57 EUR
+  2. Pizza Item 08 (M008): 1432.98 EUR
+  3. Pizza Item 03 (M003): 1252.08 EUR
+  4. Main Item 42 (M042): 1104.84 EUR
+  5. Main Item 07 (M007): 1002.80 EUR
+
+Worst 5 by gross_margin:
+  1. Drink Item 45 (M045): 67.60 EUR
+  2. Starter Item 11 (M011): 91.20 EUR
+  3. Starter Item 06 (M006): 92.82 EUR
+  4. Dessert Item 29 (M029): 127.60 EUR
+  5. Dessert Item 44 (M044): 169.60 EUR
+
+DEMAND BY TIME OF DAY
+Period        Order lines    Units    Revenue EUR   Demand %
+Morning                 0        0           0.00       0.00
+Lunch                 610     1541       15926.44      46.73
+Afternoon             107      287        3049.76       8.70
+Dinner                583     1470       14656.49      44.57
+Late night              0        0           0.00       0.00
+
+DEMAND BY DAY OF WEEK
+Day           Order lines    Units    Revenue EUR   Demand %
+Monday                184      451        4781.74      13.67
+Tuesday               184      497        5067.65      15.07
+Wednesday             216      536        5351.30      16.25
+Thursday              175      434        4554.62      13.16
+Friday                184      468        4359.05      14.19
+Saturday              180      467        4740.13      14.16
+Sunday                177      445        4778.20      13.49
+
+DETAILED DEMAND BY WEEKDAY AND TIME PERIOD
+Day          Period        Order lines    Units    Revenue EUR
+Monday       Morning                 0        0           0.00
+Monday       Lunch                  86      205        2171.99
+Monday       Afternoon               9       28         373.51
+Monday       Dinner                 89      218        2236.24
+Monday       Late night              0        0           0.00
+Tuesday      Morning                 0        0           0.00
+Tuesday      Lunch                  90      233        2214.79
+Tuesday      Afternoon              16       41         480.50
+Tuesday      Dinner                 78      223        2372.36
+Tuesday      Late night              0        0           0.00
+Wednesday    Morning                 0        0           0.00
+Wednesday    Lunch                  99      252        2642.09
+Wednesday    Afternoon              19       47         442.92
+Wednesday    Dinner                 98      237        2266.29
+Wednesday    Late night              0        0           0.00
+Thursday     Morning                 0        0           0.00
+Thursday     Lunch                  79      183        1939.21
+Thursday     Afternoon              16       47         541.21
+Thursday     Dinner                 80      204        2074.20
+Thursday     Late night              0        0           0.00
+Friday       Morning                 0        0           0.00
+Friday       Lunch                  82      211        2006.59
+Friday       Afternoon              14       41         387.51
+Friday       Dinner                 88      216        1964.95
+Friday       Late night              0        0           0.00
+Saturday     Morning                 0        0           0.00
+Saturday     Lunch                  88      234        2389.49
+Saturday     Afternoon              15       39         362.88
+Saturday     Dinner                 77      194        1987.76
+Saturday     Late night              0        0           0.00
+Sunday       Morning                 0        0           0.00
+Sunday       Lunch                  86      223        2562.28
+Sunday       Afternoon              18       44         461.23
+Sunday       Dinner                 73      178        1754.69
+Sunday       Late night              0        0           0.00
+
+DEMAND EXTREMES
+Busiest period: Wednesday Lunch (252 units sold)
+Quietest active period: Monday Afternoon (28 units sold)
+
+GRAPHICAL PERFORMANCE DASHBOARD
+================================================
+Dashboard saved: results/dashboard.png
+Includes category profitability, best-selling items, weekday demand and demand heatmap.
+
+RULE-BASED MENU RECOMMENDATIONS
+================================================
+Demand threshold (median units): 56
+Gross margin threshold: 55.00%
+Values at or above the thresholds are classified as high.
+
+RECOMMENDATION SUMMARY
+Promote: 18 items
+Review: 8 items
+Consider removal: 4 items
+Maintain: 15 items
+
+RECOMMENDATION EXAMPLES
+(First 2 items in menu order per category)
+
+Promote:
+  Starter Item 01 (M001): Low demand but high profitability. Units sold: 51 (menu median: 56); gross margin: 65.62%.
+  Dessert Item 04 (M004): Low demand but high profitability. Units sold: 44 (menu median: 56); gross margin: 63.57%.
+
+Review:
+  Starter Item 11 (M011): High demand but low profitability. Units sold: 57 (menu median: 56); gross margin: 50.63%.
+  Main Item 12 (M012): High demand but low profitability. Units sold: 135 (menu median: 56); gross margin: 52.96%.
+
+Consider removal:
+  Drink Item 05 (M005): Low demand and low profitability. Units sold: 48 (menu median: 56); gross margin: 46.56%.
+  Starter Item 06 (M006): Low demand and low profitability. Units sold: 34 (menu median: 56); gross margin: 52.80%.
+
+Maintain:
+  Main Item 02 (M002): High demand and high profitability. Units sold: 90 (menu median: 56); gross margin: 61.80%.
+  Pizza Item 03 (M003): High demand and high profitability. Units sold: 141 (menu median: 56); gross margin: 66.47%.
+
+Full recommendations: results/menu_recommendations.csv
+
+HYPOTHETICAL PRICE SIMULATION
+================================================
+Applied price change: +10.00%
+
+Original revenue: 33632.69 EUR
+Simulated revenue: 36998.54 EUR
+Revenue difference: +3365.85 EUR
+
+Original gross margin: 20062.87 EUR
+Simulated gross margin: 23428.72 EUR
+Margin difference: +3365.85 EUR
