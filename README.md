@@ -12,6 +12,14 @@ In addition to the core analysis, the application includes synthetic order gener
 
 The main analytical calculations rely on fundamental Python programming concepts, including functions, loops, conditions, dictionaries, lists, and sorting. Pandas and Matplotlib are used to complement these calculations through data organization and visualization.
 
+### Reference Documentation
+
+The project was developed in accordance with the official **Project 10 — Restaurant Orders & Menu Performance Analyzer: Detailed Student Specification**, provided by the professor.
+
+The document defines the mandatory requirements, optional extensions, validation criteria, expected deliverables, and assessment guidelines.
+
+The original specification is available here: [Project 10 — Detailed Student Specification](Project_10_Specification.pdf).
+
 ## 2. Group Members
 
 - Vasco Manuel Chaves Marques
