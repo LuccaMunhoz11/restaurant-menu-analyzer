@@ -1,0 +1,46 @@
+item_id,name,category,units_sold,margin_percentage,median_units_sold,recommendation,reason
+M001,Starter Item 01,Starter,19,65.62,28,Promote,Low demand but high profitability. Units sold: 19 (menu median: 28); gross margin: 65.62%.
+M002,Main Item 02,Main,21,61.8,28,Promote,Low demand but high profitability. Units sold: 21 (menu median: 28); gross margin: 61.80%.
+M003,Pizza Item 03,Pizza,33,66.47,28,Maintain,High demand and high profitability. Units sold: 33 (menu median: 28); gross margin: 66.47%.
+M004,Dessert Item 04,Dessert,17,63.57,28,Promote,Low demand but high profitability. Units sold: 17 (menu median: 28); gross margin: 63.57%.
+M005,Drink Item 05,Drink,35,46.56,28,Review,High demand but low profitability. Units sold: 35 (menu median: 28); gross margin: 46.56%.
+M006,Starter Item 06,Starter,34,52.8,28,Review,High demand but low profitability. Units sold: 34 (menu median: 28); gross margin: 52.80%.
+M007,Main Item 07,Main,28,59.51,28,Maintain,High demand and high profitability. Units sold: 28 (menu median: 28); gross margin: 59.51%.
+M008,Pizza Item 08,Pizza,36,66.37,28,Maintain,High demand and high profitability. Units sold: 36 (menu median: 28); gross margin: 66.37%.
+M009,Dessert Item 09,Dessert,23,67.21,28,Promote,Low demand but high profitability. Units sold: 23 (menu median: 28); gross margin: 67.21%.
+M010,Drink Item 10,Drink,28,62.8,28,Maintain,High demand and high profitability. Units sold: 28 (menu median: 28); gross margin: 62.80%.
+M011,Starter Item 11,Starter,29,50.63,28,Review,High demand but low profitability. Units sold: 29 (menu median: 28); gross margin: 50.63%.
+M012,Main Item 12,Main,23,52.96,28,Consider removal,Low demand and low profitability. Units sold: 23 (menu median: 28); gross margin: 52.96%.
+M013,Pizza Item 13,Pizza,18,64.79,28,Promote,Low demand but high profitability. Units sold: 18 (menu median: 28); gross margin: 64.79%.
+M014,Dessert Item 14,Dessert,25,56.75,28,Promote,Low demand but high profitability. Units sold: 25 (menu median: 28); gross margin: 56.75%.
+M015,Drink Item 15,Drink,23,61.52,28,Promote,Low demand but high profitability. Units sold: 23 (menu median: 28); gross margin: 61.52%.
+M016,Starter Item 16,Starter,43,64.2,28,Maintain,High demand and high profitability. Units sold: 43 (menu median: 28); gross margin: 64.20%.
+M017,Main Item 17,Main,42,62.59,28,Maintain,High demand and high profitability. Units sold: 42 (menu median: 28); gross margin: 62.59%.
+M018,Pizza Item 18,Pizza,23,52.64,28,Consider removal,Low demand and low profitability. Units sold: 23 (menu median: 28); gross margin: 52.64%.
+M019,Dessert Item 19,Dessert,28,67.17,28,Maintain,High demand and high profitability. Units sold: 28 (menu median: 28); gross margin: 67.17%.
+M020,Drink Item 20,Drink,24,60.2,28,Promote,Low demand but high profitability. Units sold: 24 (menu median: 28); gross margin: 60.20%.
+M021,Starter Item 21,Starter,20,52.4,28,Consider removal,Low demand and low profitability. Units sold: 20 (menu median: 28); gross margin: 52.40%.
+M022,Main Item 22,Main,35,42.37,28,Review,High demand but low profitability. Units sold: 35 (menu median: 28); gross margin: 42.37%.
+M023,Pizza Item 23,Pizza,29,47.7,28,Review,High demand but low profitability. Units sold: 29 (menu median: 28); gross margin: 47.70%.
+M024,Dessert Item 24,Dessert,31,59.85,28,Maintain,High demand and high profitability. Units sold: 31 (menu median: 28); gross margin: 59.85%.
+M025,Drink Item 25,Drink,41,65.5,28,Maintain,High demand and high profitability. Units sold: 41 (menu median: 28); gross margin: 65.50%.
+M026,Starter Item 26,Starter,18,52.39,28,Consider removal,Low demand and low profitability. Units sold: 18 (menu median: 28); gross margin: 52.39%.
+M027,Main Item 27,Main,34,55.03,28,Maintain,High demand and high profitability. Units sold: 34 (menu median: 28); gross margin: 55.03%.
+M028,Pizza Item 28,Pizza,27,54.92,28,Consider removal,Low demand and low profitability. Units sold: 27 (menu median: 28); gross margin: 54.92%.
+M029,Dessert Item 29,Dessert,29,66.51,28,Maintain,High demand and high profitability. Units sold: 29 (menu median: 28); gross margin: 66.51%.
+M030,Drink Item 30,Drink,15,66.99,28,Promote,Low demand but high profitability. Units sold: 15 (menu median: 28); gross margin: 66.99%.
+M031,Starter Item 31,Starter,32,62.97,28,Maintain,High demand and high profitability. Units sold: 32 (menu median: 28); gross margin: 62.97%.
+M032,Main Item 32,Main,20,64.53,28,Promote,Low demand but high profitability. Units sold: 20 (menu median: 28); gross margin: 64.53%.
+M033,Pizza Item 33,Pizza,26,61.08,28,Promote,Low demand but high profitability. Units sold: 26 (menu median: 28); gross margin: 61.08%.
+M034,Dessert Item 34,Dessert,20,64.98,28,Promote,Low demand but high profitability. Units sold: 20 (menu median: 28); gross margin: 64.98%.
+M035,Drink Item 35,Drink,31,57.64,28,Maintain,High demand and high profitability. Units sold: 31 (menu median: 28); gross margin: 57.64%.
+M036,Starter Item 36,Starter,26,64.13,28,Promote,Low demand but high profitability. Units sold: 26 (menu median: 28); gross margin: 64.13%.
+M037,Main Item 37,Main,19,42.82,28,Consider removal,Low demand and low profitability. Units sold: 19 (menu median: 28); gross margin: 42.82%.
+M038,Pizza Item 38,Pizza,31,63.48,28,Maintain,High demand and high profitability. Units sold: 31 (menu median: 28); gross margin: 63.48%.
+M039,Dessert Item 39,Dessert,28,66.85,28,Maintain,High demand and high profitability. Units sold: 28 (menu median: 28); gross margin: 66.85%.
+M040,Drink Item 40,Drink,31,55.52,28,Maintain,High demand and high profitability. Units sold: 31 (menu median: 28); gross margin: 55.52%.
+M041,Starter Item 41,Starter,44,60.52,28,Maintain,High demand and high profitability. Units sold: 44 (menu median: 28); gross margin: 60.52%.
+M042,Main Item 42,Main,39,55.48,28,Maintain,High demand and high profitability. Units sold: 39 (menu median: 28); gross margin: 55.48%.
+M043,Pizza Item 43,Pizza,47,62.2,28,Maintain,High demand and high profitability. Units sold: 47 (menu median: 28); gross margin: 62.20%.
+M044,Dessert Item 44,Dessert,28,56.99,28,Maintain,High demand and high profitability. Units sold: 28 (menu median: 28); gross margin: 56.99%.
+M045,Drink Item 45,Drink,21,47.62,28,Consider removal,Low demand and low profitability. Units sold: 21 (menu median: 28); gross margin: 47.62%.
