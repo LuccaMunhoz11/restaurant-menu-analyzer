@@ -297,10 +297,11 @@ def main():
   # Include the graphical dashboard location in the report
   report += (
       "\nGRAPHICAL PERFORMANCE DASHBOARD\n"
-      "=" * 48 + "\n"
-      f"Dashboard saved: {dashboard_path}\n"
-      "Includes category profitability, best-selling items, "
-      "weekday demand and demand heatmap.\n"
+      + "=" * 48
+      + "\n"
+      + f"Dashboard saved: {dashboard_path}\n"
+      + "Includes category profitability, best-selling items, "
+        "weekday demand and demand heatmap.\n"
   )
     
   # Add rule-based menu recommendations to the report
