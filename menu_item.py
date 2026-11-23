@@ -42,3 +42,6 @@ class MenuItem:
 
         self.unit_cost = unit_cost
         self.price = price
+
+        # Update unit profit after validating and assigning prices
+        self.profit = round(self.price - self.unit_cost, 2)
