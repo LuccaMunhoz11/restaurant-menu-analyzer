@@ -102,3 +102,159 @@ The main analytical calculations are implemented primarily using fundamental Pyt
 External libraries such as Pandas and Matplotlib complement these calculations by supporting data preparation and graphical visualization rather than replacing the core analytical logic.
 
 This separation of responsibilities also allows the application to reuse the same analytical functions when processing both the original course data and synthetically generated orders.
+
+## 5. Installation and Execution
+
+The application runs through the command-line interface (CLI), using `main.py` as its entry point. Users can analyze the original restaurant dataset, generate synthetic orders, and evaluate hypothetical price changes through configurable command-line arguments.
+
+### 5.1. Prerequisites
+
+Before running the application, ensure that the following are available:
+
+- **Python 3**
+- **pip**, Python's package installer
+- **Pandas**, for DataFrame processing and analytical summaries
+- **Matplotlib**, for graphical visualizations
+
+The external dependencies are listed in the project's `requirements.txt` file.
+
+To install them, open a terminal in the project's root directory and execute:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+On systems where Python 3 is accessed through `python3`, replace `python` with `python3` in the commands.
+
+No additional external libraries are required. The remaining modules used by the application are part of Python's standard library.
+
+### 5.2. Running the Original Dataset
+
+To execute the application using the original course-provided datasets, run:
+
+```bash
+python main.py
+```
+
+This is equivalent to:
+
+```bash
+python main.py --mode original
+```
+
+The program reads:
+
+- `data/menu.csv` — menu items, categories, prices, and estimated unit costs.
+- `data/orders.csv` — customer order records, dates, times, item references, and quantities.
+
+The application validates the inputs, matches orders to menu items, calculates performance indicators, generates rankings and recommendations, performs temporal analysis, and produces the corresponding reports and visualizations.
+
+The results are saved automatically in the `results/` directory.
+
+### 5.3. Generating Synthetic Orders (E02)
+
+The application can also generate synthetic orders based on the existing menu.
+
+To generate 500 order lines using a dinner-heavy demand profile and a fixed random seed, run:
+
+```bash
+python main.py --mode generated --num-orders 500 --profile dinner_heavy --seed 42
+```
+
+Three demand profiles are available:
+
+| Profile | Description |
+|---|---|
+| `balanced` | Gives equal selection weight to lunch, afternoon, and dinner periods. |
+| `lunch_heavy` | Assigns greater selection weight to the lunch period. |
+| `dinner_heavy` | Assigns greater selection weight to the dinner period. |
+
+Users can also configure the generation dates.
+
+For example:
+
+```bash
+python main.py --mode generated --num-orders 1000 --profile lunch_heavy --seed 123 --start-date 2026-06-01 --num-days 30
+```
+
+This command generates 1,000 order lines over a period of 30 consecutive calendar days, starting on June 1, 2026.
+
+The generated records follow the same five-column schema as the original `orders.csv` file. They use valid menu-item identifiers and can be processed by the same analytical functions.
+
+A fixed random seed makes the generated dataset reproducible when the same menu and generation parameters are used.
+
+### 5.4. Hypothetical Price Simulation (E05)
+
+The application allows users to evaluate hypothetical percentage changes applied to all menu prices.
+
+For example, to simulate a 10% price increase using the original dataset:
+
+```bash
+python main.py --mode original --price-change 10
+```
+
+To simulate a 15% price reduction:
+
+```bash
+python main.py --mode original --price-change -15
+```
+
+The simulation calculates new selling prices, revenue, and gross margins and compares them with the original results.
+
+**Important assumption:** The quantities sold remain fixed throughout each hypothetical scenario. The simulation evaluates the financial impact of changing prices without assuming that customer demand increases or decreases.
+
+Price changes below −100% are rejected, and the percentage must be a finite numerical value.
+
+The application also generates a price-sensitivity chart comparing total gross margin across hypothetical menu-wide price changes from −50% to +50%, using increments of 10 percentage points.
+
+### 5.5. Combining Synthetic Orders and Price Simulation
+
+The order generator and price-simulation extension can also be used together.
+
+For example:
+
+```bash
+python main.py --mode generated --num-orders 500 --profile dinner_heavy --seed 42 --price-change 10
+```
+
+This command:
+
+1. Generates 500 synthetic order lines using the dinner-heavy profile.
+2. Validates and analyzes the generated orders.
+3. Calculates baseline menu performance and recommendations.
+4. Simulates a 10% increase in menu prices while keeping generated quantities fixed.
+5. Produces updated reports, CSV results, and graphical visualizations.
+
+This demonstrates that the selected extensions are integrated into the same application.
+
+### 5.6. Command-Line Arguments
+
+The following arguments are supported by `main.py`:
+
+| Argument | Description | Default |
+|---|---|---|
+| `--mode` | Selects `original` or `generated` orders. | `original` |
+| `--num-orders` | Number of synthetic order lines to generate; must be positive. | `500` |
+| `--profile` | Demand profile: `balanced`, `lunch_heavy`, or `dinner_heavy`. | `balanced` |
+| `--seed` | Integer random seed for reproducible generation. | `42` |
+| `--start-date` | Starting date for generated orders, in `YYYY-MM-DD` format. | `2026-06-01` |
+| `--num-days` | Number of consecutive calendar days covered by generation; must be positive. | `30` |
+| `--price-change` | Percentage price adjustment applied to all menu items. | Not applied |
+
+The order-generation parameters are used when `--mode generated` is selected.
+
+To display the complete list of supported arguments directly in the terminal, run:
+
+```bash
+python main.py --help
+```
+
+### 5.7. Execution Notes
+
+All commands should be executed from the project's root directory, where `main.py`, `requirements.txt`, and the `data/` folder are located.
+
+The application automatically creates the `results/` directory if necessary. Existing result files with the same names may be overwritten when a new scenario is executed.
+
+A standard baseline execution does not automatically remove files generated by previous scenarios. Therefore, the submitted `results/` directory contains a clean representative baseline execution, while selected alternative scenarios are preserved separately under `results/examples/`.
+
+The following sections describe the input schemas, generated files, and analytical outputs in greater detail.
