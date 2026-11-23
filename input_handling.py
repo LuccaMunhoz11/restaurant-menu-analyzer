@@ -60,11 +60,12 @@ def validate_menu(menu) -> Tuple[List[MenuItem], List[str]]:
         
         mu = MenuItem()
         # CATEGORIES
-        mu.item_id = item.get("item_id", "").strip()
-        mu.name = item.get("name", "").strip()
-        mu.category = item.get("category", "").strip()
-        cost_str = item.get("unit_cost", "").strip()
-        price_str = item.get("price", "").strip()
+        # Retrieve menu fields, safely handling missing values
+        mu.item_id = (item.get("item_id") or "").strip()
+        mu.name = (item.get("name") or "").strip()
+        mu.category = (item.get("category") or "").strip()
+        cost_str = (item.get("unit_cost") or "").strip()
+        price_str = (item.get("price") or "").strip()
 
         try:
             mu.validate_categories()
@@ -104,11 +105,12 @@ def validate_orders(orders, valid_menu):
         # row_number refers to the csv row where item is (to localize errors)
         # starts at 2 because first line is designated to the header
         
-        order_id = order.get("order_id", "").strip()
-        date_str = order.get("date", "").strip()
-        time_str = order.get("time", "").strip()
-        item_id = order.get("item_id", "").strip()
-        quantity_str = order.get("quantity", "").strip()
+        # Retrieve order fields, safely handling missing values
+        order_id = (order.get("order_id") or "").strip()
+        date_str = (order.get("date") or "").strip()
+        time_str = (order.get("time") or "").strip()
+        item_id = (order.get("item_id") or "").strip()
+        quantity_str = (order.get("quantity") or "").strip()
 
         # Check if all required fields are filled in
         if not order_id or not date_str or not time_str or not item_id or not quantity_str:
